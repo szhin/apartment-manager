@@ -1,9 +1,45 @@
 import 'package:apartment_manager/data/apartment_data.dart';
-import 'package:apartment_manager/widgets/apartment_item.dart';
+import 'package:apartment_manager/models/apartment.dart';
+import 'package:apartment_manager/widgets/apartment_list.dart';
 import 'package:flutter/material.dart';
 
-class FindApartmentScreen extends StatelessWidget {
+class FindApartmentScreen extends StatefulWidget {
   const FindApartmentScreen({super.key});
+
+  @override
+  State<FindApartmentScreen> createState() => _FindApartmentScreenState();
+}
+
+class _FindApartmentScreenState extends State<FindApartmentScreen> {
+  List<Apartment> currentApartments = shinApartments;
+  List<Apartment> recommendApartments = [];
+  List<Apartment> newApartments = [];
+  DateTime twoMonthAgo = DateTime.now().subtract(const Duration(days: 60));
+
+  Color blackColor = Colors.black;
+  Color greyColor = Colors.grey;
+
+  bool isRecommendSelected = false;
+  bool isNewSelected = false;
+  bool isAllSelected = true;
+
+  // initialize value for recommendApartments & newApartments
+  @override
+  void initState() {
+    super.initState();
+    recommendApartments =
+        shinApartments.where((apartment) => apartment.recommended).toList();
+    newApartments = shinApartments
+        .where((apartment) => apartment.date.isAfter(twoMonthAgo))
+        .toList();
+  }
+
+  // Function to change the currentApartments value
+  void kindApartments(List<Apartment> selectedKindApartments) {
+    setState(() {
+      currentApartments = selectedKindApartments;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,47 +125,52 @@ class FindApartmentScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 GestureDetector(
-                  onTap: () {},
-                  child: Text(
-                    'Recommend',
-                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          color: Theme.of(context).colorScheme.onBackground,
-                        ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Text(
-                    'New',
-                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          color: Theme.of(context).colorScheme.onBackground,
-                        ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    isAllSelected = true;
+                    isRecommendSelected = false;
+                    isNewSelected = false;
+                    kindApartments(shinApartments);
+                  },
                   child: Text(
                     'All',
                     style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          color: Theme.of(context).colorScheme.onBackground,
+                          color: isAllSelected ? blackColor : greyColor,
+                        ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    isRecommendSelected = true;
+                    isAllSelected = false;
+                    isNewSelected = false;
+                    kindApartments(recommendApartments);
+                  },
+                  child: Text(
+                    'Recommend',
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          color: isRecommendSelected ? blackColor : greyColor,
+                        ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    isNewSelected = true;
+                    isRecommendSelected = false;
+                    isAllSelected = false;
+                    kindApartments(newApartments);
+                  },
+                  child: Text(
+                    'New',
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          color: isNewSelected ? blackColor : greyColor,
                         ),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 30),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: shinApartments.length,
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    ApartmentItem(apartment: shinApartments[index]),
-                    const SizedBox(height: 10),
-                  ],
-                );
-              },
+            ApartmentList(
+              currentApartments: currentApartments,
             ),
           ],
         ),

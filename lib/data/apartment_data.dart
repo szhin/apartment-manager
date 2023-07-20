@@ -13,7 +13,7 @@ final shinApartments = [
     date: DateTime(2023, 02, 06),
     price: 2235.0,
     imagePath: 'assets/images/apartments/shin_garden.jpeg',
-    recommended: true,
+    recommended: false,
   ),
   Apartment(
     title: 'Shin Moon',
