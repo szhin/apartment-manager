@@ -1,10 +1,23 @@
 import 'package:apartment_manager/models/apartment.dart';
+import 'package:apartment_manager/screens/apartment_screen.dart';
 import 'package:flutter/material.dart';
 
 class ApartmentItem extends StatelessWidget {
   final Apartment apartment;
 
-  const ApartmentItem({super.key, required this.apartment});
+  const ApartmentItem({
+    super.key,
+    required this.apartment,
+  });
+
+  void takeALook(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ApartmentScreen(apartment: apartment),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +26,7 @@ class ApartmentItem extends StatelessWidget {
         Container(
           width: double.infinity, // Chiều rộng bằng 100% phần tử cha
           constraints:
-              const BoxConstraints(maxHeight: 350), // Giới hạn chiều cao là 400
+              const BoxConstraints(maxHeight: 400), // Giới hạn chiều cao là 400
           child: FractionallySizedBox(
             widthFactor: 1.0, // Chiều rộng bằng 100% phần tử cha
             child: ClipRRect(
@@ -53,6 +66,7 @@ class ApartmentItem extends StatelessWidget {
           child: TextButton(
             onPressed: () {
               // Hàm xử lý sự kiện khi nhấn nút
+              takeALook(context);
             },
             style: TextButton.styleFrom(
               backgroundColor: Colors.white, // Màu nền của button

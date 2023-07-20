@@ -9,9 +9,11 @@ class Apartment {
   final String id;
   final String title;
   final DateTime date;
-  final double price;
+  final String price;
   final String imagePath;
   final bool recommended;
+  final String address;
+  final String description;
 
   Apartment({
     required this.title,
@@ -19,6 +21,8 @@ class Apartment {
     required this.price,
     required this.imagePath,
     required this.recommended,
+    required this.address,
+    required this.description,
   }) : id = uuid.v4();
 
   String get formattedDate {

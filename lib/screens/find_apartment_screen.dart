@@ -10,7 +10,7 @@ class FindApartmentScreen extends StatefulWidget {
   State<FindApartmentScreen> createState() => _FindApartmentScreenState();
 }
 
-class _FindApartmentScreenState extends State<FindApartmentScreen> {
+class _FindApartmentScreenState extends State<FindApartmentScreen>  {
   List<Apartment> currentApartments = shinApartments;
   List<Apartment> recommendApartments = [];
   List<Apartment> newApartments = [];
