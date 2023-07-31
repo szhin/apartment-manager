@@ -1,16 +1,26 @@
 import 'package:apartment_manager/models/apartment.dart';
+import 'package:apartment_manager/screens/payment_screen.dart';
 import 'package:flutter/material.dart';
 
 class ApartmentInfo extends StatelessWidget {
   final Apartment apartment;
   const ApartmentInfo({super.key, required this.apartment});
 
+  void bookNow(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PaymentScreen(apartment: apartment),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -187,7 +197,7 @@ class ApartmentInfo extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

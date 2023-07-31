@@ -10,7 +10,7 @@ class FindApartmentScreen extends StatefulWidget {
   State<FindApartmentScreen> createState() => _FindApartmentScreenState();
 }
 
-class _FindApartmentScreenState extends State<FindApartmentScreen>  {
+class _FindApartmentScreenState extends State<FindApartmentScreen> {
   List<Apartment> currentApartments = shinApartments;
   List<Apartment> recommendApartments = [];
   List<Apartment> newApartments = [];
@@ -45,19 +45,20 @@ class _FindApartmentScreenState extends State<FindApartmentScreen>  {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 12, 59, 46),
+        // backgroundColor: const Color.fromARGB(255, 12, 59, 46),
+        backgroundColor: Colors.white,
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               Icons.adb,
-              color: Colors.white,
+              color: Colors.black,
             ),
             SizedBox(width: 4),
             Text(
               'Shin.',
               style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
             ),
           ],
         ),
