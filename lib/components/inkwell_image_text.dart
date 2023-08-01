@@ -17,7 +17,7 @@ class InkWellImageText extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(18),
         margin: EdgeInsets.symmetric(horizontal: margin),
         decoration: BoxDecoration(
           color: Colors.white,

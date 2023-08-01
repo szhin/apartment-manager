@@ -5,6 +5,7 @@ class MyTextField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final Function onChanged;
+  final IconData icon;
 
   const MyTextField({
     super.key,
@@ -12,6 +13,7 @@ class MyTextField extends StatelessWidget {
     required this.hintText,
     required this.obscureText,
     required this.onChanged,
+    required this.icon,
   });
 
   @override
@@ -33,6 +35,7 @@ class MyTextField extends StatelessWidget {
           ),
           fillColor: const Color.fromRGBO(243, 245, 247, 1),
           filled: true,
+          prefixIcon: Icon(icon),
           hintText: hintText,
           hintStyle: TextStyle(
             color: Colors.grey[500],

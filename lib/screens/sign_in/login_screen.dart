@@ -58,7 +58,7 @@ class LoginScreen extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 52),
+                      const SizedBox(height: 42),
                       const Text(
                         "Welcome back to our app!",
                         style: TextStyle(
@@ -75,24 +75,24 @@ class LoginScreen extends StatelessWidget {
                           fontSize: 18,
                         ),
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 34),
                       const InkWellImageText(
                         text: 'Continue with Google',
                         imagePath: 'assets/images/login/google.png',
                         margin: 20.0,
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 18),
                       const InkWellImageText(
                         text: 'Continue with Apple',
                         imagePath: 'assets/images/login/apple.png',
                         margin: 20.0,
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 18),
                       InkWellText(
                         text: 'Continue with Email',
                         margin: 20,
-                        isValid: true,
-                        isCorrectEmail: true,
+                        isValidEmail: true,
+                        isCorrect: true,
                         onTap: () {
                           toEmailScreen(context);
                         },
