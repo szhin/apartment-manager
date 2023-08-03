@@ -46,6 +46,7 @@ class _FindApartmentScreenState extends State<FindApartmentScreen> {
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: const Color.fromARGB(255, 12, 59, 46),
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -1,6 +1,7 @@
 import 'package:apartment_manager/components/inkwell_text.dart';
 import 'package:apartment_manager/components/my_textfield.dart';
 import 'package:apartment_manager/data/accounts_info.dart';
+import 'package:apartment_manager/models/account.dart';
 import 'package:apartment_manager/screens/loading_screen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,14 @@ class _CreateAccountState extends State<CreateAccount> {
   void toLoadingScreen(BuildContext context) {
     _checkAllFieldFilled();
     if (_isAllFieldsFilled && !_isSameInfo && _isEmailValid) {
+      Account newAccount = Account(
+        username: username.text,
+        password: password.text,
+        email: email.text,
+        name: name.text,
+        phoneNumber: phone.text,
+      );
+
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -55,16 +64,18 @@ class _CreateAccountState extends State<CreateAccount> {
   }
 
   void _checkDifferentInformation() {
-    setState(() {
-      _isSameInfo = false;
-      for (var i = 0; i < accountsInfo.length; i++) {
-        if (accountsInfo[i].email == email.text ||
-            accountsInfo[i].username == username.text) {
-          _isSameInfo = true;
-          break;
+    setState(
+      () {
+        _isSameInfo = false;
+        for (var i = 0; i < accountsInfo.length; i++) {
+          if (accountsInfo[i].email == email.text ||
+              accountsInfo[i].username == username.text) {
+            _isSameInfo = true;
+            break;
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   @override

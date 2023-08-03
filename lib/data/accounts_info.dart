@@ -1,6 +1,6 @@
 import 'package:apartment_manager/models/account.dart';
 
-final accountsInfo = [
+List<Account> accountsInfo = [
   Account(
     username: 'bang',
     password: 'bang',
