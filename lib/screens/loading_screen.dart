@@ -1,6 +1,5 @@
+import 'package:apartment_manager/screens/accounts_data_screen.dart';
 import 'package:flutter/material.dart';
-
-import 'find_apartment_screen.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
@@ -25,7 +24,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const FindApartmentScreen(),
+        builder: (context) => const AccountsDataScreen(),
+        // builder: (context) => const CreateAccount(),
       ),
     );
   }

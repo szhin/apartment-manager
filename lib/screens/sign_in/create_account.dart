@@ -2,9 +2,11 @@ import 'package:apartment_manager/components/inkwell_text.dart';
 import 'package:apartment_manager/components/my_textfield.dart';
 import 'package:apartment_manager/data/accounts_info.dart';
 import 'package:apartment_manager/models/account.dart';
-import 'package:apartment_manager/screens/loading_screen.dart';
+import 'package:apartment_manager/services/database_account.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+
+import '../loading_screen.dart';
 
 class CreateAccount extends StatefulWidget {
   const CreateAccount({super.key});
@@ -19,6 +21,7 @@ class _CreateAccountState extends State<CreateAccount> {
   final phone = TextEditingController();
   final username = TextEditingController();
   final password = TextEditingController();
+
   bool _isAllFieldsFilled = false;
   bool _isEmailValid = false;
   bool _isSameInfo = false;
@@ -31,15 +34,23 @@ class _CreateAccountState extends State<CreateAccount> {
 
   void toLoadingScreen(BuildContext context) {
     _checkAllFieldFilled();
+
     if (_isAllFieldsFilled && !_isSameInfo && _isEmailValid) {
-      Account newAccount = Account(
+      final Account newAccounts = Account(
         username: username.text,
         password: password.text,
         email: email.text,
         name: name.text,
         phoneNumber: phone.text,
       );
-
+      DatabaseAccount.instance.create(newAccounts);
+      setState(() {
+        name.clear();
+        username.clear();
+        password.clear();
+        email.clear();
+        phone.clear();
+      });
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -158,7 +169,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 margin: 0,
                 isValidEmail: _isEmailValid,
                 isCorrect: true,
-                onTap: () {
+                onTap: () async {
                   toLoadingScreen(context);
                 },
               ),
