@@ -1,8 +1,13 @@
-import 'package:apartment_manager/screens/accounts_data_screen.dart';
+import 'package:apartment_manager/screens/find_apartment_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../models/account.dart';
+
+// ignore: must_be_immutable
 class LoadingScreen extends StatefulWidget {
-  const LoadingScreen({super.key});
+  Account accountLogin;
+
+  LoadingScreen({super.key, required this.accountLogin});
 
   @override
   State<LoadingScreen> createState() => _LoadingScreenState();
@@ -24,8 +29,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const AccountsDataScreen(),
-        // builder: (context) => const CreateAccount(),
+        builder: (context) => FindApartmentScreen(
+          accountLogin: widget.accountLogin,
+        ),
       ),
     );
   }

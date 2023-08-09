@@ -6,6 +6,7 @@ class AccountsPage extends StatefulWidget {
   const AccountsPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _AccountsPageState createState() => _AccountsPageState();
 }
 
@@ -30,7 +31,7 @@ class _AccountsPageState extends State<AccountsPage> {
   Future refreshAccounts() async {
     setState(() => isLoading = true);
 
-    this.accounts = await DatabaseAccount.instance.readAllAccounts();
+    accounts = await DatabaseAccount.instance.readAllAccounts();
 
     setState(() => isLoading = false);
   }

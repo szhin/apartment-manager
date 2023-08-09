@@ -4,14 +4,13 @@ import 'package:sqflite/sqflite.dart';
 
 class DatabaseAccount {
   static final DatabaseAccount instance = DatabaseAccount._init();
-
   static Database? _database;
 
+  // Đảm bảo chỉ có duy nhất một đối tượng DatabaseAccount được sử dụng trong ứng dụng
   DatabaseAccount._init();
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-
     _database = await _initDB('accounts.db');
     return _database!;
   }
@@ -38,7 +37,7 @@ CREATE TABLE $tableAccounts (
 ''');
   }
 
-  Future<Account> create(Account account) async {
+  Future<Account> addAccount(Account account) async {
     final db = await instance.database;
 
     // final json = note.toJson();
@@ -53,9 +52,29 @@ CREATE TABLE $tableAccounts (
     return account.copy(id: id);
   }
 
-  Future<Account> readAccount(int id) async {
+  Future<int> update(Account account) async {
     final db = await instance.database;
 
+    return db.update(
+      tableAccounts,
+      account.toJson(),
+      where: '${AccountFields.id} = ?',
+      whereArgs: [account.id],
+    );
+  }
+
+  Future<int> delete(int id) async {
+    final db = await instance.database;
+
+    return await db.delete(
+      tableAccounts,
+      where: '${AccountFields.id} = ?',
+      whereArgs: [id],
+    );
+  }
+
+  Future<Account> readAccount(int id) async {
+    final db = await instance.database;
     final maps = await db.query(
       tableAccounts,
       columns: AccountFields.values,
@@ -82,25 +101,10 @@ CREATE TABLE $tableAccounts (
     return result.map((json) => Account.fromJson(json)).toList();
   }
 
-  Future<int> update(Account account) async {
+  Future<int> getAccountCount() async {
     final db = await instance.database;
-
-    return db.update(
-      tableAccounts,
-      account.toJson(),
-      where: '${AccountFields.id} = ?',
-      whereArgs: [account.id],
-    );
-  }
-
-  Future<int> delete(int id) async {
-    final db = await instance.database;
-
-    return await db.delete(
-      tableAccounts,
-      where: '${AccountFields.id} = ?',
-      whereArgs: [id],
-    );
+    final result = await db.rawQuery('SELECT COUNT(*) FROM $tableAccounts');
+    return Sqflite.firstIntValue(result) ?? 0;
   }
 
   Future close() async {

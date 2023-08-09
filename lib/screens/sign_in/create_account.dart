@@ -1,6 +1,5 @@
 import 'package:apartment_manager/components/inkwell_text.dart';
 import 'package:apartment_manager/components/my_textfield.dart';
-import 'package:apartment_manager/data/accounts_info.dart';
 import 'package:apartment_manager/models/account.dart';
 import 'package:apartment_manager/services/database_account.dart';
 import 'package:email_validator/email_validator.dart';
@@ -43,7 +42,16 @@ class _CreateAccountState extends State<CreateAccount> {
         name: name.text,
         phoneNumber: phone.text,
       );
-      DatabaseAccount.instance.create(newAccounts);
+      DatabaseAccount.instance.addAccount(newAccounts);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LoadingScreen(
+            accountLogin: newAccounts,
+          ),
+        ),
+      );
       setState(() {
         name.clear();
         username.clear();
@@ -51,12 +59,6 @@ class _CreateAccountState extends State<CreateAccount> {
         email.clear();
         phone.clear();
       });
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const LoadingScreen(),
-        ),
-      );
     }
   }
 
@@ -67,6 +69,7 @@ class _CreateAccountState extends State<CreateAccount> {
           phone.text.isNotEmpty &&
           password.text.isNotEmpty &&
           username.text.isNotEmpty;
+
       if (_isAllFieldsFilled) {
         _checkDifferentInformation();
       }
@@ -74,19 +77,19 @@ class _CreateAccountState extends State<CreateAccount> {
     });
   }
 
-  void _checkDifferentInformation() {
-    setState(
-      () {
-        _isSameInfo = false;
-        for (var i = 0; i < accountsInfo.length; i++) {
-          if (accountsInfo[i].email == email.text ||
-              accountsInfo[i].username == username.text) {
-            _isSameInfo = true;
-            break;
-          }
-        }
-      },
-    );
+  void _checkDifferentInformation() async {
+    bool isSameInfo = false;
+    List<Account> accounts = await DatabaseAccount.instance.readAllAccounts();
+    for (var i = 0; i < accounts.length; i++) {
+      if (accounts[i].email == email.text ||
+          accounts[i].username == username.text) {
+        isSameInfo = true;
+        break;
+      }
+    }
+    setState(() {
+      _isSameInfo = isSameInfo;
+    });
   }
 
   @override

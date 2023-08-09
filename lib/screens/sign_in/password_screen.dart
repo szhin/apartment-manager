@@ -1,7 +1,8 @@
 import 'package:apartment_manager/components/inkwell_text.dart';
 import 'package:apartment_manager/components/my_textfield.dart';
-import 'package:apartment_manager/data/accounts_info.dart';
+import 'package:apartment_manager/models/account.dart';
 import 'package:apartment_manager/screens/loading_screen.dart';
+import 'package:apartment_manager/services/database_account.dart';
 import 'package:flutter/material.dart';
 
 class PasswordScreen extends StatefulWidget {
@@ -14,12 +15,16 @@ class PasswordScreen extends StatefulWidget {
 class _PasswordScreenState extends State<PasswordScreen> {
   final passwordController = TextEditingController();
   bool _isCorrectPassword = false;
+  late Account accountLogin;
 
-  void _checkCorrectPassword(String password) {
+  void _checkCorrectPassword(String password) async {
+    List<Account> accounts = await DatabaseAccount.instance.readAllAccounts();
     setState(() {
-      for (var i = 0; i < accountsInfo.length; i++) {
-        if (password == accountsInfo[i].password) {
+      for (var i = 0; i < accounts.length; i++) {
+        if (password == accounts[i].password) {
           _isCorrectPassword = true;
+          accountLogin = accounts[i];
+          break;
         }
       }
     });
@@ -29,7 +34,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const LoadingScreen(),
+        builder: (context) => LoadingScreen(
+          accountLogin: accountLogin,
+        ),
       ),
     );
   }

@@ -1,10 +1,13 @@
 import 'package:apartment_manager/data/apartment_data.dart';
+import 'package:apartment_manager/models/account.dart';
 import 'package:apartment_manager/models/apartment.dart';
 import 'package:apartment_manager/widgets/apartment_list.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class FindApartmentScreen extends StatefulWidget {
-  const FindApartmentScreen({super.key});
+  Account accountLogin;
+  FindApartmentScreen({super.key, required this.accountLogin});
 
   @override
   State<FindApartmentScreen> createState() => _FindApartmentScreenState();
@@ -69,6 +72,22 @@ class _FindApartmentScreenState extends State<FindApartmentScreen> {
         child: ListView(
           padding: const EdgeInsets.only(bottom: 30),
           children: [
+            const SizedBox(
+              height: 24,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'Hi, ${widget.accountLogin.name}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 28,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(
               height: 24,
             ),

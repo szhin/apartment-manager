@@ -1,10 +1,12 @@
 import 'package:apartment_manager/components/inkwell_text.dart';
 import 'package:apartment_manager/components/my_textfield.dart';
-import 'package:apartment_manager/data/accounts_info.dart';
 import 'package:apartment_manager/screens/sign_in/create_account.dart';
 import 'package:apartment_manager/screens/sign_in/password_screen.dart';
+import 'package:apartment_manager/services/database_account.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+
+import '../../models/account.dart';
 
 class EmailScreen extends StatefulWidget {
   const EmailScreen({super.key});
@@ -27,10 +29,11 @@ class _EmailScreenState extends State<EmailScreen> {
     });
   }
 
-  void _checkCorrectEmailUsername(String text) {
+  void _checkCorrectEmailUsername(String text) async {
+    List<Account> accounts = await DatabaseAccount.instance.readAllAccounts();
     setState(() {
-      for (var i = 0; i < accountsInfo.length; i++) {
-        if (text == accountsInfo[i].email) {
+      for (var i = 0; i < accounts.length; i++) {
+        if (text == accounts[i].email) {
           _isCorrectEmail = true;
         }
       }
