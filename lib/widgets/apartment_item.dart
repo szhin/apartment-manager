@@ -10,7 +10,7 @@ class ApartmentItem extends StatelessWidget {
     required this.apartment,
   });
 
-  void takeALook(BuildContext context) {
+  void toApartmentScreen(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -66,7 +66,7 @@ class ApartmentItem extends StatelessWidget {
           child: TextButton(
             onPressed: () {
               // Hàm xử lý sự kiện khi nhấn nút
-              takeALook(context);
+              toApartmentScreen(context);
             },
             style: TextButton.styleFrom(
               backgroundColor: Colors.white, // Màu nền của button

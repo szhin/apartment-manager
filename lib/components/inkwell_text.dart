@@ -7,8 +7,6 @@ class InkWellText extends StatelessWidget {
 
   // isValidEmail to check validity of email format
   // (_isEmailValid = EmailValidator.validate(email))
-  final bool isCorrect;
-  // isCorrect to check the similarity between
   // text and password or text or email in database
   final Function onTap;
 
@@ -17,7 +15,6 @@ class InkWellText extends StatelessWidget {
     required this.text,
     required this.margin,
     required this.isValidEmail,
-    required this.isCorrect,
     required this.onTap,
   });
 
@@ -30,10 +27,7 @@ class InkWellText extends StatelessWidget {
 
     return InkWell(
       onTap: () => {
-        if (isCorrect)
-          {
-            onTap(),
-          }
+        onTap(),
       },
       child: Container(
         padding: const EdgeInsets.all(18),

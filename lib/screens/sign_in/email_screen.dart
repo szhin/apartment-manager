@@ -16,40 +16,75 @@ class EmailScreen extends StatefulWidget {
 }
 
 class _EmailScreenState extends State<EmailScreen> {
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   bool _isEmailValid = false;
-  bool _isCorrectEmail = false;
+  // if email same in database, _isCorrect = true
+  bool _isEmailCorrect = false;
+  bool _isPressed = false;
+  String warningMessage = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _resetState();
+  }
+
+  void _resetState() {
+    setState(() {
+      emailController.clear();
+      _isPressed = false;
+      _isEmailCorrect = false;
+      _isEmailValid = false;
+    });
+  }
 
   void _checkEmailFormat(String email) {
     setState(() {
       if (EmailValidator.validate(email)) {
         _isEmailValid = EmailValidator.validate(email);
-        _checkCorrectEmailUsername(email);
+        _isPressed = false;
+        warningMessage = '';
+        _checkCorrectEmail(emailController.text);
+      } else {
+        warningMessage = 'Invalid email format';
       }
     });
   }
 
-  void _checkCorrectEmailUsername(String text) async {
+  void _checkCorrectEmail(String text) async {
     List<Account> accounts = await DatabaseAccount.instance.readAllAccounts();
-    setState(() {
-      for (var i = 0; i < accounts.length; i++) {
-        if (text == accounts[i].email) {
-          _isCorrectEmail = true;
-        }
+    bool emailFound = false;
+
+    for (var i = 0; i < accounts.length; i++) {
+      if (text == accounts[i].email) {
+        emailFound = true;
+        break;
       }
+    }
+
+    setState(() {
+      _isEmailCorrect = emailFound;
+      _isEmailCorrect
+          ? warningMessage = ''
+          : warningMessage = 'Email address not found';
     });
   }
 
-  void screenEmailToPassword(BuildContext context) {
+  ////////////////////// Route screen/////////////////////////
+  void toPasswordScreen(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => const PasswordScreen(),
       ),
+    ).then(
+      (_) => {
+        _resetState(),
+      },
     );
   }
 
-  void screenEmailToCreateAccount(BuildContext context) {
+  void toCreateAccountScreen(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -58,6 +93,7 @@ class _EmailScreenState extends State<EmailScreen> {
     );
   }
 
+  ///////////////////////////////////////////////////////////
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,9 +114,18 @@ class _EmailScreenState extends State<EmailScreen> {
                   ),
                 ),
                 const SizedBox(height: 32),
+                _isPressed
+                    ? Text(
+                        warningMessage,
+                        style: const TextStyle(color: Colors.red),
+                      )
+                    : const Text(
+                        '',
+                        style: TextStyle(color: Colors.red),
+                      ),
                 MyTextField(
-                  controller: usernameController,
-                  hintText: 'Username or email',
+                  controller: emailController,
+                  hintText: 'Type your email',
                   obscureText: false,
                   onChanged: (text) {
                     _checkEmailFormat(text);
@@ -92,9 +137,13 @@ class _EmailScreenState extends State<EmailScreen> {
                   text: 'Continue',
                   margin: 0,
                   isValidEmail: _isEmailValid,
-                  isCorrect: _isCorrectEmail,
                   onTap: () {
-                    screenEmailToPassword(context);
+                    setState(() {
+                      _isPressed = true;
+                    });
+                    if (_isEmailCorrect) {
+                      toPasswordScreen(context);
+                    }
                   },
                 ),
                 const SizedBox(height: 32),
@@ -103,7 +152,7 @@ class _EmailScreenState extends State<EmailScreen> {
                   children: [
                     TextButton(
                       onPressed: () {
-                        screenEmailToCreateAccount(context);
+                        toCreateAccountScreen(context);
                       },
                       child: const Text(
                         'New user? Create an account',

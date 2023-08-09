@@ -171,7 +171,6 @@ class _CreateAccountState extends State<CreateAccount> {
                 text: 'Create Account',
                 margin: 0,
                 isValidEmail: _isEmailValid,
-                isCorrect: true,
                 onTap: () async {
                   toLoadingScreen(context);
                 },

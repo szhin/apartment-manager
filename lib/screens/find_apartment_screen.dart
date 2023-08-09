@@ -73,7 +73,7 @@ class _FindApartmentScreenState extends State<FindApartmentScreen> {
           padding: const EdgeInsets.only(bottom: 30),
           children: [
             const SizedBox(
-              height: 24,
+              height: 16,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,

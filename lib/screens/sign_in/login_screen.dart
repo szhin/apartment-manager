@@ -92,7 +92,6 @@ class LoginScreen extends StatelessWidget {
                         text: 'Continue with Email',
                         margin: 20,
                         isValidEmail: true,
-                        isCorrect: true,
                         onTap: () {
                           toEmailScreen(context);
                         },
