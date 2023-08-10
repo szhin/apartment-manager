@@ -1,5 +1,5 @@
 import 'package:apartment_manager/models/apartment.dart';
-import 'package:apartment_manager/screens/payment_screen.dart';
+import 'package:apartment_manager/screens/sign_in/account/screens/payment_screen.dart';
 import 'package:flutter/material.dart';
 
 class ApartmentInfo extends StatelessWidget {
@@ -10,7 +10,9 @@ class ApartmentInfo extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PaymentScreen(apartment: apartment),
+        builder: (context) => const PaymentScreen(
+          title: 'Payment',
+        ),
       ),
     );
   }

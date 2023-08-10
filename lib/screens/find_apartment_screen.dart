@@ -1,6 +1,7 @@
 import 'package:apartment_manager/data/apartment_data.dart';
 import 'package:apartment_manager/models/account.dart';
 import 'package:apartment_manager/models/apartment.dart';
+import 'package:apartment_manager/screens/sign_in/account/setting_screen.dart';
 import 'package:apartment_manager/widgets/apartment_list.dart';
 import 'package:flutter/material.dart';
 
@@ -44,6 +45,15 @@ class _FindApartmentScreenState extends State<FindApartmentScreen> {
     });
   }
 
+  void toSettingScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SettingScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +86,7 @@ class _FindApartmentScreenState extends State<FindApartmentScreen> {
               height: 16,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'Hi, ${widget.accountLogin.name}',
@@ -86,6 +96,15 @@ class _FindApartmentScreenState extends State<FindApartmentScreen> {
                     color: Colors.black,
                   ),
                 ),
+                InkWell(
+                  onTap: () {
+                    toSettingScreen(context);
+                  },
+                  child: const Icon(
+                    Icons.settings,
+                    color: Colors.black,
+                  ),
+                )
               ],
             ),
             const SizedBox(
