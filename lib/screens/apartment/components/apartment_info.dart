@@ -1,5 +1,5 @@
 import 'package:apartment_manager/models/apartment.dart';
-import 'package:apartment_manager/screens/sign_in/account/screens/payment_screen.dart';
+import 'package:apartment_manager/screens/setting/screens/payment_screen.dart';
 import 'package:flutter/material.dart';
 
 class ApartmentInfo extends StatelessWidget {

@@ -1,15 +1,15 @@
-import 'package:apartment_manager/screens/sign_in/account/components/leading_appbar_setting.dart';
-import 'package:apartment_manager/screens/sign_in/account/components/setting_component.dart';
-import 'package:apartment_manager/screens/sign_in/account/components/title_appbar_setting.dart';
-import 'package:apartment_manager/screens/sign_in/account/screens/about_us_screen.dart';
-import 'package:apartment_manager/screens/sign_in/account/screens/edit_profile_screen.dart';
-import 'package:apartment_manager/screens/sign_in/account/screens/help_center_screen.dart';
-import 'package:apartment_manager/screens/sign_in/account/screens/language_screen.dart';
-import 'package:apartment_manager/screens/sign_in/account/screens/notifications_screen.dart';
-import 'package:apartment_manager/screens/sign_in/account/screens/password_screen.dart';
-import 'package:apartment_manager/screens/sign_in/account/screens/payment_screen.dart';
-import 'package:apartment_manager/screens/sign_in/account/screens/report_a_problem_screen.dart';
-import 'package:apartment_manager/screens/sign_in/account/screens/security_screen.dart';
+import 'package:apartment_manager/screens/setting/components/leading_appbar_setting.dart';
+import 'package:apartment_manager/screens/setting/components/setting_component.dart';
+import 'package:apartment_manager/screens/setting/components/title_appbar_setting.dart';
+import 'package:apartment_manager/screens/setting/screens/about_us_screen.dart';
+import 'package:apartment_manager/screens/setting/screens/edit_profile_screen.dart';
+import 'package:apartment_manager/screens/setting/screens/help_center_screen.dart';
+import 'package:apartment_manager/screens/setting/screens/language_screen.dart';
+import 'package:apartment_manager/screens/setting/screens/notifications_screen.dart';
+import 'package:apartment_manager/screens/setting/screens/password_screen.dart';
+import 'package:apartment_manager/screens/setting/screens/payment_screen.dart';
+import 'package:apartment_manager/screens/setting/screens/report_a_problem_screen.dart';
+import 'package:apartment_manager/screens/setting/screens/security_screen.dart';
 import 'package:flutter/material.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -201,11 +201,10 @@ class SettingScreen extends StatelessWidget {
                         color: Colors.red,
                       ),
                     ),
-                    onTap: () {
-                      // Handle row tap if needed
-                    },
+                    onTap: () {},
                   ),
                 ),
+                const SizedBox(height: 20),
               ],
             )
           ],

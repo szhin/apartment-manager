@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:apartment_manager/models/apartment.dart';
-import 'package:apartment_manager/widgets/apartment_info.dart';
+import 'package:apartment_manager/screens/apartment/components/apartment_info.dart';
 import 'package:flutter/material.dart';
 
 class ApartmentScreen extends StatelessWidget {

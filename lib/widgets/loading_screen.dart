@@ -1,4 +1,4 @@
-import 'package:apartment_manager/screens/find_apartment_screen.dart';
+import 'package:apartment_manager/screens/apartment/find_apartment_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../models/account.dart';

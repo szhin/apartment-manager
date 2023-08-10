@@ -1,8 +1,8 @@
 import 'package:apartment_manager/data/apartment_data.dart';
 import 'package:apartment_manager/models/account.dart';
 import 'package:apartment_manager/models/apartment.dart';
-import 'package:apartment_manager/screens/sign_in/account/setting_screen.dart';
-import 'package:apartment_manager/widgets/apartment_list.dart';
+import 'package:apartment_manager/screens/setting/setting_screen.dart';
+import 'package:apartment_manager/screens/apartment/components/apartment_list.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

@@ -34,7 +34,6 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // remove the red banner
       theme: theme,
-      // home: const FindApartmentScreen(),
       home: const LoginScreen(),
     );
   }

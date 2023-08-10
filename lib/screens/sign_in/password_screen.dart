@@ -1,7 +1,7 @@
 import 'package:apartment_manager/components/inkwell_text.dart';
 import 'package:apartment_manager/components/my_textfield.dart';
 import 'package:apartment_manager/models/account.dart';
-import 'package:apartment_manager/screens/loading_screen.dart';
+import 'package:apartment_manager/widgets/loading_screen.dart';
 import 'package:apartment_manager/services/database_account.dart';
 import 'package:flutter/material.dart';
 

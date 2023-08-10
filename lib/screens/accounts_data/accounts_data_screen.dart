@@ -2,15 +2,15 @@ import 'package:apartment_manager/models/account.dart';
 import 'package:apartment_manager/services/database_account.dart';
 import 'package:flutter/material.dart';
 
-class AccountsPage extends StatefulWidget {
-  const AccountsPage({super.key});
+class AccountsDataScreen extends StatefulWidget {
+  const AccountsDataScreen({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
   _AccountsPageState createState() => _AccountsPageState();
 }
 
-class _AccountsPageState extends State<AccountsPage> {
+class _AccountsPageState extends State<AccountsDataScreen> {
   late List<Account> accounts;
   bool isLoading = false;
 

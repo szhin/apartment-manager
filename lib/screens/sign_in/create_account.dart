@@ -5,7 +5,7 @@ import 'package:apartment_manager/services/database_account.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
-import '../loading_screen.dart';
+import '../../widgets/loading_screen.dart';
 
 class CreateAccount extends StatefulWidget {
   const CreateAccount({super.key});

@@ -1,5 +1,5 @@
 import 'package:apartment_manager/models/apartment.dart';
-import 'package:apartment_manager/screens/apartment_screen.dart';
+import 'package:apartment_manager/screens/apartment/components/apartment_screen.dart';
 import 'package:flutter/material.dart';
 
 class ApartmentItem extends StatelessWidget {
@@ -65,7 +65,6 @@ class ApartmentItem extends StatelessWidget {
           right: 20,
           child: TextButton(
             onPressed: () {
-              // Hàm xử lý sự kiện khi nhấn nút
               toApartmentScreen(context);
             },
             style: TextButton.styleFrom(

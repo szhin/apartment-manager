@@ -1,10 +1,10 @@
-import 'package:apartment_manager/screens/sign_in/account/components/leading_appbar_setting.dart';
-import 'package:apartment_manager/screens/sign_in/account/components/title_appbar_setting.dart';
+import 'package:apartment_manager/screens/setting/components/leading_appbar_setting.dart';
+import 'package:apartment_manager/screens/setting/components/title_appbar_setting.dart';
 import 'package:flutter/material.dart';
 
-class HelpCenterScreen extends StatelessWidget {
+class PasswordScreenSetting extends StatelessWidget {
   final String title;
-  const HelpCenterScreen({super.key, required this.title});
+  const PasswordScreenSetting({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
