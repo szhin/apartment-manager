@@ -1,5 +1,5 @@
 import 'package:apartment_manager/models/apartment.dart';
-import 'package:apartment_manager/screens/apartment/components/apartment_screen.dart';
+import 'package:apartment_manager/screens/apartment/apartment_screen.dart';
 import 'package:flutter/material.dart';
 
 class ApartmentItem extends StatelessWidget {

@@ -28,10 +28,22 @@ class MyTextField extends StatelessWidget {
         obscureText: obscureText,
         decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.transparent),
+            borderSide: BorderSide(
+              color: Colors.transparent,
+            ),
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(14),
+              bottom: Radius.circular(14),
+            ),
           ),
           focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Color.fromARGB(255, 196, 196, 196)),
+            borderSide: BorderSide(
+              color: Color.fromARGB(255, 196, 196, 196),
+            ),
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(14),
+              bottom: Radius.circular(14),
+            ),
           ),
           fillColor: const Color.fromRGBO(243, 245, 247, 1),
           filled: true,
