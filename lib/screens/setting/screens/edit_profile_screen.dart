@@ -23,6 +23,7 @@ class EditProfileScreen extends StatelessWidget {
     final bio = TextEditingController();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
@@ -175,7 +176,7 @@ class EditProfileScreen extends StatelessWidget {
               ),
             ),
           ),
-          const MenuBottom(),
+          MenuBottom(accountLogin: accountLogin),
         ],
       ),
     );

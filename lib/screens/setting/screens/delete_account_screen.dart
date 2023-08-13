@@ -20,6 +20,7 @@ class DeleteAccountScreen extends StatelessWidget {
     final name = TextEditingController();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
@@ -51,6 +52,15 @@ class DeleteAccountScreen extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
+          ),
+          const Positioned(
+            top: 10,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            child: ClipRRect(
+                // ... (phần trang trí khác)
+                ),
           ),
           Positioned(
             top: 10,
@@ -150,7 +160,7 @@ class DeleteAccountScreen extends StatelessWidget {
               ),
             ),
           ),
-          const MenuBottom(),
+          MenuBottom(accountLogin: accountLogin),
         ],
       ),
     );

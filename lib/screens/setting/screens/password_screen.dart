@@ -21,6 +21,7 @@ class PasswordScreenSetting extends StatelessWidget {
     final name = TextEditingController();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
@@ -155,7 +156,7 @@ class PasswordScreenSetting extends StatelessWidget {
               ),
             ),
           ),
-          const MenuBottom(),
+          MenuBottom(accountLogin: accountLogin),
         ],
       ),
     );

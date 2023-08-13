@@ -3,6 +3,7 @@ import 'package:apartment_manager/screens/setting/components/title_appbar_settin
 import 'package:flutter/material.dart';
 
 import '../../../models/account.dart';
+import '../../../widgets/menu_bottom.dart';
 
 class LanguageScreen extends StatelessWidget {
   final String title;
@@ -13,6 +14,7 @@ class LanguageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
@@ -22,10 +24,12 @@ class LanguageScreen extends StatelessWidget {
           leading: const LeadingAppBarSetting(isComponent: true),
         ),
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [],
+          children: [
+            MenuBottom(accountLogin: accountLogin),
+          ],
         ),
       ),
     );

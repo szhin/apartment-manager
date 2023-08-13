@@ -2,6 +2,7 @@ import 'package:apartment_manager/screens/setting/components/leading_appbar_sett
 import 'package:apartment_manager/screens/setting/components/setting_component.dart';
 import 'package:apartment_manager/screens/setting/components/title_appbar_setting.dart';
 import 'package:apartment_manager/screens/setting/screens/about_us_screen.dart';
+import 'package:apartment_manager/screens/setting/screens/delete_account_screen.dart';
 import 'package:apartment_manager/screens/setting/screens/edit_profile_screen.dart';
 import 'package:apartment_manager/screens/setting/screens/help_center_screen.dart';
 import 'package:apartment_manager/screens/setting/screens/language_screen.dart';
@@ -110,6 +111,16 @@ class SettingScreen extends StatelessWidget {
     );
   }
 
+  void toDeleteAccountScreen(BuildContext context, Account accountLogin) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DeleteAccountScreen(
+            title: 'Delete account', accountLogin: accountLogin),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -214,7 +225,9 @@ class SettingScreen extends StatelessWidget {
                         color: Colors.red,
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      toDeleteAccountScreen(context, accountLogin);
+                    },
                   ),
                 ),
                 const SizedBox(height: 20),

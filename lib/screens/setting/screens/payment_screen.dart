@@ -42,6 +42,7 @@ class PaymentScreen extends StatelessWidget {
     transactions.sort((a, b) => b.date.compareTo(a.date));
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
@@ -264,7 +265,7 @@ class PaymentScreen extends StatelessWidget {
               ),
             ),
           ),
-          const MenuBottom(),
+          MenuBottom(accountLogin: accountLogin),
         ],
       ),
     );
