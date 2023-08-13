@@ -2,9 +2,13 @@ import 'package:apartment_manager/screens/setting/components/leading_appbar_sett
 import 'package:apartment_manager/screens/setting/components/title_appbar_setting.dart';
 import 'package:flutter/material.dart';
 
+import '../../../models/account.dart';
+
 class ReportAProblemScreen extends StatelessWidget {
   final String title;
-  const ReportAProblemScreen({super.key, required this.title});
+  final Account accountLogin;
+  const ReportAProblemScreen(
+      {super.key, required this.title, required this.accountLogin});
 
   @override
   Widget build(BuildContext context) {

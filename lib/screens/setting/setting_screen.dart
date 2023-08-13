@@ -12,87 +12,100 @@ import 'package:apartment_manager/screens/setting/screens/report_a_problem_scree
 import 'package:apartment_manager/screens/setting/screens/security_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/account.dart';
+
 class SettingScreen extends StatelessWidget {
-  const SettingScreen({super.key});
+  final Account accountLogin;
+  const SettingScreen({super.key, required this.accountLogin});
 
-  void toEditProfileScreen(BuildContext context) {
+  void toEditProfileScreen(BuildContext context, Account accountLogin) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const EditProfileScreen(title: 'Edit profile'),
+        builder: (context) => EditProfileScreen(
+          title: 'Edit profile',
+          accountLogin: accountLogin,
+        ),
       ),
     );
   }
 
-  void toPasswordScreen(BuildContext context) {
+  void toPasswordScreen(BuildContext context, Account accountLogin) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const PasswordScreenSetting(title: 'Password'),
+        builder: (context) => PasswordScreenSetting(
+            title: 'Password', accountLogin: accountLogin),
       ),
     );
   }
 
-  void toPaymentScreen(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const PaymentScreen(title: 'Payment'),
-      ),
-    );
-  }
-
-  void toNotificationsScreen(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const NotificationsScreen(title: 'Notifications'),
-      ),
-    );
-  }
-
-  void toSecurityScreen(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const SecurityScreen(title: 'Security'),
-      ),
-    );
-  }
-
-  void toLanguageScreen(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const LanguageScreen(title: 'Language'),
-      ),
-    );
-  }
-
-  void toHelpCenterScreen(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const HelpCenterScreen(title: 'Help center'),
-      ),
-    );
-  }
-
-  void toAboutUsScreen(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const AboutUsScreen(title: 'About us'),
-      ),
-    );
-  }
-
-  void toReportAProblemScreen(BuildContext context) {
+  void toPaymentScreen(BuildContext context, Account accountLogin) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) =>
-            const ReportAProblemScreen(title: 'Report a problem'),
+            PaymentScreen(title: 'Payment', accountLogin: accountLogin),
+      ),
+    );
+  }
+
+  void toNotificationsScreen(BuildContext context, Account accountLogin) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => NotificationsScreen(
+            title: 'Notifications', accountLogin: accountLogin),
+      ),
+    );
+  }
+
+  void toSecurityScreen(BuildContext context, Account accountLogin) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            SecurityScreen(title: 'Security', accountLogin: accountLogin),
+      ),
+    );
+  }
+
+  void toLanguageScreen(BuildContext context, Account accountLogin) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            LanguageScreen(title: 'Language', accountLogin: accountLogin),
+      ),
+    );
+  }
+
+  void toHelpCenterScreen(BuildContext context, Account accountLogin) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            HelpCenterScreen(title: 'Help center', accountLogin: accountLogin),
+      ),
+    );
+  }
+
+  void toAboutUsScreen(BuildContext context, Account accountLogin) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            AboutUsScreen(title: 'About us', accountLogin: accountLogin),
+      ),
+    );
+  }
+
+  void toReportAProblemScreen(BuildContext context, Account accountLogin) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ReportAProblemScreen(
+            title: 'Report a problem', accountLogin: accountLogin),
       ),
     );
   }
@@ -118,63 +131,63 @@ class SettingScreen extends StatelessWidget {
               icon: Icons.people,
               title: 'Edit profile',
               onTap: () {
-                toEditProfileScreen(context);
+                toEditProfileScreen(context, accountLogin);
               },
             ),
             SettingComponent(
               icon: Icons.lock,
               title: 'Password',
               onTap: () {
-                toPasswordScreen(context);
+                toPasswordScreen(context, accountLogin);
               },
             ),
             SettingComponent(
               icon: Icons.payment,
               title: 'Payment',
               onTap: () {
-                toPaymentScreen(context);
+                toPaymentScreen(context, accountLogin);
               },
             ),
             SettingComponent(
               icon: Icons.notifications,
               title: 'Notifications',
               onTap: () {
-                toNotificationsScreen(context);
+                toNotificationsScreen(context, accountLogin);
               },
             ),
             SettingComponent(
               icon: Icons.security,
               title: 'Security',
               onTap: () {
-                toSecurityScreen(context);
+                toSecurityScreen(context, accountLogin);
               },
             ),
             SettingComponent(
               icon: Icons.language,
               title: 'Language',
               onTap: () {
-                toLanguageScreen(context);
+                toLanguageScreen(context, accountLogin);
               },
             ),
             SettingComponent(
               icon: Icons.help_center,
               title: 'Help center',
               onTap: () {
-                toHelpCenterScreen(context);
+                toHelpCenterScreen(context, accountLogin);
               },
             ),
             SettingComponent(
               icon: Icons.info,
               title: 'About us',
               onTap: () {
-                toAboutUsScreen(context);
+                toAboutUsScreen(context, accountLogin);
               },
             ),
             SettingComponent(
               icon: Icons.report,
               title: 'Report a problem',
               onTap: () {
-                toReportAProblemScreen(context);
+                toReportAProblemScreen(context, accountLogin);
               },
             ),
             SettingComponent(

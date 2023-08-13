@@ -1,4 +1,3 @@
-import 'package:apartment_manager/screens/setting/screens/delete_account_screen.dart';
 import 'package:apartment_manager/screens/sign_in/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,10 +34,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // remove the red banner
       theme: theme,
-      home: const DeleteAccountScreen(
-        title: 'Delete account',
-      ),
-      // home: const LoginScreen(),
+      home: const LoginScreen(),
     );
   }
 }

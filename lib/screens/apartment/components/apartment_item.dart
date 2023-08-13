@@ -2,19 +2,25 @@ import 'package:apartment_manager/models/apartment.dart';
 import 'package:apartment_manager/screens/apartment/apartment_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../../models/account.dart';
+
 class ApartmentItem extends StatelessWidget {
   final Apartment apartment;
-
+  final Account accountLogin;
   const ApartmentItem({
     super.key,
     required this.apartment,
+    required this.accountLogin,
   });
 
-  void toApartmentScreen(BuildContext context) {
+  void toApartmentScreen(BuildContext context, Account accoutnLogin) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ApartmentScreen(apartment: apartment),
+        builder: (context) => ApartmentScreen(
+          apartment: apartment,
+          accountLogin: accountLogin,
+        ),
       ),
     );
   }
@@ -65,7 +71,10 @@ class ApartmentItem extends StatelessWidget {
           right: 20,
           child: TextButton(
             onPressed: () {
-              toApartmentScreen(context);
+              toApartmentScreen(
+                context,
+                accountLogin,
+              );
             },
             style: TextButton.styleFrom(
               backgroundColor: Colors.white, // Màu nền của button

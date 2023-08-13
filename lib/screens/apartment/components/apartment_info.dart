@@ -2,16 +2,21 @@ import 'package:apartment_manager/models/apartment.dart';
 import 'package:apartment_manager/screens/setting/screens/payment_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../../models/account.dart';
+
 class ApartmentInfo extends StatelessWidget {
   final Apartment apartment;
-  const ApartmentInfo({super.key, required this.apartment});
+  final Account accountLogin;
+  const ApartmentInfo(
+      {super.key, required this.apartment, required this.accountLogin});
 
-  void bookNow(BuildContext context) {
+  void bookNow(BuildContext context, Account accountLogin) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const PaymentScreen(
+        builder: (context) => PaymentScreen(
           title: 'Payment',
+          accountLogin: accountLogin,
         ),
       ),
     );

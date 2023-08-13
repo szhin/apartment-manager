@@ -4,10 +4,13 @@ import 'package:apartment_manager/models/apartment.dart';
 import 'package:apartment_manager/screens/apartment/components/apartment_info.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/account.dart';
+
 class ApartmentScreen extends StatelessWidget {
   final Apartment apartment;
-
-  const ApartmentScreen({super.key, required this.apartment});
+  final Account accountLogin;
+  const ApartmentScreen(
+      {super.key, required this.apartment, required this.accountLogin});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +49,10 @@ class ApartmentScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.4),
                   ),
-                  child: ApartmentInfo(apartment: apartment),
+                  child: ApartmentInfo(
+                    apartment: apartment,
+                    accountLogin: accountLogin,
+                  ),
                 ),
               ),
             ),

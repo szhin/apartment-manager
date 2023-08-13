@@ -6,10 +6,14 @@ import 'package:apartment_manager/widgets/menu_bottom.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/my_textfield.dart';
+import '../../../models/account.dart';
 
 class DeleteAccountScreen extends StatelessWidget {
   final String title;
-  const DeleteAccountScreen({super.key, required this.title});
+  final Account accountLogin;
+
+  const DeleteAccountScreen(
+      {super.key, required this.title, required this.accountLogin});
 
   @override
   Widget build(BuildContext context) {

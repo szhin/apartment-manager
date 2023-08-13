@@ -45,11 +45,11 @@ class _FindApartmentScreenState extends State<FindApartmentScreen> {
     });
   }
 
-  void toSettingScreen(BuildContext context) {
+  void toSettingScreen(BuildContext context, Account accountLogin) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const SettingScreen(),
+        builder: (context) => SettingScreen(accountLogin: accountLogin),
       ),
     );
   }
@@ -98,7 +98,7 @@ class _FindApartmentScreenState extends State<FindApartmentScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    toSettingScreen(context);
+                    toSettingScreen(context, widget.accountLogin);
                   },
                   child: const Icon(
                     Icons.settings,
@@ -211,6 +211,7 @@ class _FindApartmentScreenState extends State<FindApartmentScreen> {
             const SizedBox(height: 30),
             ApartmentList(
               currentApartments: currentApartments,
+              accountLogin: widget.accountLogin,
             ),
           ],
         ),

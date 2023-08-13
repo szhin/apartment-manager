@@ -7,10 +7,14 @@ import 'package:flutter/material.dart';
 
 import '../../../components/inkwell_text.dart';
 import '../../../components/my_textfield.dart';
+import '../../../models/account.dart';
 
 class PasswordScreenSetting extends StatelessWidget {
   final String title;
-  const PasswordScreenSetting({super.key, required this.title});
+  final Account accountLogin;
+
+  const PasswordScreenSetting(
+      {super.key, required this.title, required this.accountLogin});
 
   @override
   Widget build(BuildContext context) {
