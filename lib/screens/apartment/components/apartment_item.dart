@@ -32,7 +32,7 @@ class ApartmentItem extends StatelessWidget {
         Container(
           width: double.infinity, // Chiều rộng bằng 100% phần tử cha
           constraints:
-              const BoxConstraints(maxHeight: 400), // Giới hạn chiều cao là 400
+              const BoxConstraints(maxHeight: 400), // Giới hạn chiều cao 400
           child: FractionallySizedBox(
             widthFactor: 1.0, // Chiều rộng bằng 100% phần tử cha
             child: ClipRRect(

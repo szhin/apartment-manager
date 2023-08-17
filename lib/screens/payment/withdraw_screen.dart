@@ -8,19 +8,16 @@ import 'package:flutter/material.dart';
 import '../../../components/my_textfield.dart';
 import '../../../models/account.dart';
 
-class EditProfileScreen extends StatelessWidget {
+class WithdrawScreen extends StatelessWidget {
   final String title;
   final Account accountLogin;
 
-  const EditProfileScreen(
+  const WithdrawScreen(
       {super.key, required this.title, required this.accountLogin});
 
   @override
   Widget build(BuildContext context) {
     final name = TextEditingController();
-    final username = TextEditingController();
-    final email = TextEditingController();
-    final bio = TextEditingController();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -29,7 +26,10 @@ class EditProfileScreen extends StatelessWidget {
         child: AppBar(
           backgroundColor: Colors.black,
           elevation: 0,
-          title: TitleAppBarSetting(title: title, isComponent: true),
+          title: TitleAppBarSetting(
+            title: title,
+            isComponent: true,
+          ),
           centerTitle: true,
           leading: const LeadingAppBarSetting(isComponent: true),
         ),
@@ -52,6 +52,15 @@ class EditProfileScreen extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
+          ),
+          const Positioned(
+            top: 10,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            child: ClipRRect(
+                // ... (phần trang trí khác)
+                ),
           ),
           Positioned(
             top: 10,
@@ -78,16 +87,32 @@ class EditProfileScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Edit profile',
+                            'We’re sorry to see',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 32,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(height: 20),
                           const Text(
-                            'Name',
+                            'you go ',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 32),
+                          const Text(
+                            'Warning: Deleting your account will permanently remove all of your data and cannot be undone. This includes your profile, chats, comments, and any other information associated with your account. Are you sure you want to proceed with deleting your account?',
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 16,
+                            ),
+                          ),
+                          const SizedBox(height: 28),
+                          const Text(
+                            'Your password',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,
@@ -97,74 +122,36 @@ class EditProfileScreen extends StatelessWidget {
                           const SizedBox(height: 8),
                           MyTextField(
                             controller: name,
-                            hintText: 'Your name',
+                            hintText: 'Password',
+                            obscureText: true,
                             onChanged: () {},
-                            icon: Icons.people,
+                            icon: Icons.lock,
                           ),
-                          const SizedBox(height: 16),
-                          const Text(
-                            'Username',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          MyTextField(
-                            controller: username,
-                            hintText: 'Username',
-                            onChanged: () {},
-                            icon: Icons.people,
-                          ),
-                          const SizedBox(height: 16),
-                          const Text(
-                            'Email',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          MyTextField(
-                            controller: email,
-                            hintText: 'Email',
-                            onChanged: () {},
-                            icon: Icons.email,
-                          ),
-                          const SizedBox(height: 16),
-                          const Text(
-                            'Bio',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          TextField(
-                            controller: bio,
-                            minLines: 4,
-                            maxLines: 4,
-                            decoration: const InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.transparent),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 196, 196, 196),
+                          const SizedBox(height: 25),
+                          InkWell(
+                            onTap: () => {},
+                            child: Container(
+                              padding: const EdgeInsets.all(18),
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: Colors.transparent,
+                                  width: 2,
                                 ),
                               ),
-                              fillColor: Color.fromRGBO(243, 245, 247, 1),
-                              filled: true,
-                              hintText: 'Short bio',
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
+                              child: const Center(
+                                child: Text(
+                                  'Delete account',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          )
                         ],
                       ),
                     ),

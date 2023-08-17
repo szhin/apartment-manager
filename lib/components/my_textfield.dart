@@ -6,14 +6,16 @@ class MyTextField extends StatelessWidget {
   final bool obscureText;
   final Function onChanged;
   final IconData icon;
+  final bool keyboardType;
 
   const MyTextField({
     super.key,
     required this.controller,
     required this.hintText,
-    required this.obscureText,
+    this.obscureText = false,
     required this.onChanged,
     required this.icon,
+    this.keyboardType = false,
   });
 
   @override
@@ -26,6 +28,9 @@ class MyTextField extends StatelessWidget {
           onChanged(text);
         },
         obscureText: obscureText,
+        keyboardType: keyboardType
+            ? const TextInputType.numberWithOptions(decimal: true)
+            : TextInputType.text,
         decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(

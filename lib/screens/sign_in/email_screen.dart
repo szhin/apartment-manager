@@ -16,6 +16,7 @@ class EmailScreen extends StatefulWidget {
 }
 
 class _EmailScreenState extends State<EmailScreen> {
+  late Account accountLogin;
   final emailController = TextEditingController();
   bool _isEmailValid = false;
   // if email same in database, _isCorrect = true
@@ -57,6 +58,7 @@ class _EmailScreenState extends State<EmailScreen> {
 
     for (var i = 0; i < accounts.length; i++) {
       if (text == accounts[i].email) {
+        accountLogin = accounts[i];
         emailFound = true;
         break;
       }
@@ -75,7 +77,7 @@ class _EmailScreenState extends State<EmailScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const PasswordScreen(),
+        builder: (context) => PasswordScreen(accountLogin: accountLogin),
       ),
     ).then(
       (_) => {
@@ -126,7 +128,6 @@ class _EmailScreenState extends State<EmailScreen> {
                 MyTextField(
                   controller: emailController,
                   hintText: 'Type your email',
-                  obscureText: false,
                   onChanged: (text) {
                     _checkEmailFormat(text);
                   },

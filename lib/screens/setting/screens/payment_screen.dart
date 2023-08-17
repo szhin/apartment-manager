@@ -1,39 +1,89 @@
 import 'dart:ui';
 
-import 'package:apartment_manager/models/account.dart';
-import 'package:apartment_manager/screens/setting/components/leading_appbar_setting.dart';
-import 'package:apartment_manager/screens/setting/components/title_appbar_setting.dart';
-import 'package:apartment_manager/widgets/menu_bottom.dart';
 import 'package:flutter/material.dart';
 
+import '../../../models/account.dart';
 import '../../../models/transaction.dart';
+import '../../../widgets/menu_bottom.dart';
+import '../../payment/top_up_screen.dart';
+import '../../payment/transfer_screen.dart';
+import '../../payment/withdraw_screen.dart';
+import '../components/leading_appbar_setting.dart';
+import '../components/title_appbar_setting.dart';
 
-class PaymentScreen extends StatelessWidget {
-  final String title;
+class PaymentScreen extends StatefulWidget {
   final Account accountLogin;
+  final String title;
   const PaymentScreen(
-      {super.key, required this.title, required this.accountLogin});
+      {super.key, required this.accountLogin, required this.title});
 
   @override
+  State<PaymentScreen> createState() => _PaymentScreenState();
+}
+
+class _PaymentScreenState extends State<PaymentScreen> {
+  @override
   Widget build(BuildContext context) {
+    void toTopUpScreen(BuildContext context) async {
+      final updatedAmount = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TopUpScreen(
+            title: 'Top up',
+            accountLogin: widget.accountLogin,
+          ),
+        ),
+      );
+
+      if (updatedAmount != null) {
+        setState(() {
+          widget.accountLogin.amountMoney = updatedAmount;
+        });
+      }
+    }
+
+    void toTransferScreen(BuildContext context) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TransferScreen(
+            title: 'Transfer',
+            accountLogin: widget.accountLogin,
+          ),
+        ),
+      );
+    }
+
+    void toWithdrawScreen(BuildContext context) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => WithdrawScreen(
+            title: 'Withdraw',
+            accountLogin: widget.accountLogin,
+          ),
+        ),
+      );
+    }
+
     List<Transaction> transactions = [
       Transaction(
         date: DateTime.now().subtract(
           const Duration(days: 2),
         ),
-        description: 'Payment for rent',
+        nameApartment: 'Payment for rent',
         amount: -1000.0,
       ),
       Transaction(
         date: DateTime.now().subtract(
           const Duration(days: 1),
         ),
-        description: 'Grocery shopping',
+        nameApartment: 'Grocery shopping',
         amount: -50.0,
       ),
       Transaction(
         date: DateTime.now(),
-        description: 'Salary deposit',
+        nameApartment: 'Salary deposit',
         amount: 2000.0,
       ),
 
@@ -48,7 +98,7 @@ class PaymentScreen extends StatelessWidget {
         child: AppBar(
           backgroundColor: Colors.black,
           elevation: 0,
-          title: TitleAppBarSetting(title: title, isComponent: true),
+          title: TitleAppBarSetting(title: widget.title, isComponent: true),
           centerTitle: true,
           leading: const LeadingAppBarSetting(isComponent: true),
         ),
@@ -106,7 +156,7 @@ class PaymentScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            '\$ ${accountLogin.amountMoney}',
+                            '\$ ${widget.accountLogin.amountMoney}',
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 45,
@@ -129,7 +179,9 @@ class PaymentScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      toTopUpScreen(context);
+                                    },
                                     icon: const Icon(
                                       Icons.input,
                                       color: Colors.black,
@@ -146,7 +198,9 @@ class PaymentScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      toWithdrawScreen(context);
+                                    },
                                     icon: const Icon(
                                       Icons.output,
                                       color: Colors.black,
@@ -163,7 +217,9 @@ class PaymentScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      toTransferScreen(context);
+                                    },
                                     icon: const Icon(
                                       Icons.transfer_within_a_station,
                                       color: Colors.black,
@@ -234,10 +290,11 @@ class PaymentScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               Transaction transaction = transactions[index];
                               return Card(
+                                color: const Color.fromARGB(255, 252, 241, 243),
                                 elevation: 2,
                                 margin: const EdgeInsets.symmetric(vertical: 6),
                                 child: ListTile(
-                                  title: Text(transaction.description),
+                                  title: Text(transaction.nameApartment),
                                   subtitle: Text(
                                     '${transaction.date.day}/${transaction.date.month}/${transaction.date.year}',
                                   ),
@@ -265,7 +322,7 @@ class PaymentScreen extends StatelessWidget {
               ),
             ),
           ),
-          MenuBottom(accountLogin: accountLogin),
+          MenuBottom(accountLogin: widget.accountLogin),
         ],
       ),
     );

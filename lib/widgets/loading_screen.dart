@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 
 import '../models/account.dart';
 
-// ignore: must_be_immutable
 class LoadingScreen extends StatefulWidget {
-  Account accountLogin;
+  final Account accountLogin;
 
-  LoadingScreen({super.key, required this.accountLogin});
+  const LoadingScreen({super.key, required this.accountLogin});
 
   @override
   State<LoadingScreen> createState() => _LoadingScreenState();

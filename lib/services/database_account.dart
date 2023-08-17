@@ -11,19 +11,20 @@ class DatabaseAccount {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('accounts.db');
+    _database = await _initDB('accounts1.db');
     return _database!;
   }
 
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return await openDatabase(path, version: 2, onCreate: _createDB);
   }
 
   Future _createDB(Database db, int version) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = 'TEXT NOT NULL';
+    const doubleType = 'DOUBLE NOT NULL';
 
     await db.execute('''
 CREATE TABLE $tableAccounts ( 
@@ -32,7 +33,8 @@ CREATE TABLE $tableAccounts (
   ${AccountFields.password} $textType,
   ${AccountFields.email} $textType,
   ${AccountFields.name} $textType,
-  ${AccountFields.phoneNumber} $textType
+  ${AccountFields.phoneNumber} $textType,
+  ${AccountFields.amountMoney} $doubleType
   )
 ''');
   }
@@ -110,5 +112,26 @@ CREATE TABLE $tableAccounts (
   Future close() async {
     final db = await instance.database;
     db.close();
+  }
+
+  Future<void> recreateTable() async {
+    final db = await instance.database;
+    await db.execute('DROP TABLE IF EXISTS $tableAccounts');
+    await _createDB(db, 3);
+  }
+
+  Future<void> updateAmountMoney(int accountId, double newAmount) async {
+    final db = await instance.database;
+
+    final updateResult = await db.update(
+      tableAccounts,
+      {AccountFields.amountMoney: newAmount},
+      where: '${AccountFields.id} = ?',
+      whereArgs: [accountId],
+    );
+
+    if (updateResult != 1) {
+      throw Exception('Failed to update amountMoney');
+    }
   }
 }

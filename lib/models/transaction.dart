@@ -1,11 +1,11 @@
 class Transaction {
   final DateTime date;
-  final String description;
+  final String nameApartment;
   final double amount;
 
   Transaction({
     required this.date,
-    required this.description,
+    required this.nameApartment,
     required this.amount,
   });
 }

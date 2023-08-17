@@ -17,14 +17,12 @@ class _AccountsPageState extends State<AccountsDataScreen> {
   @override
   void initState() {
     super.initState();
-
     refreshAccounts();
   }
 
   @override
   void dispose() {
     DatabaseAccount.instance.close();
-
     super.dispose();
   }
 
@@ -64,7 +62,12 @@ class _AccountsPageState extends State<AccountsDataScreen> {
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(accounts[index].name),
-                  subtitle: Text(accounts[index].email),
+                  subtitle: Row(
+                    children: [
+                      Text(accounts[index].email),
+                      Text(accounts[index].amountMoney.toString())
+                    ],
+                  ),
                 );
               },
             );

@@ -2,11 +2,11 @@ import 'package:apartment_manager/components/inkwell_text.dart';
 import 'package:apartment_manager/components/my_textfield.dart';
 import 'package:apartment_manager/models/account.dart';
 import 'package:apartment_manager/widgets/loading_screen.dart';
-import 'package:apartment_manager/services/database_account.dart';
 import 'package:flutter/material.dart';
 
 class PasswordScreen extends StatefulWidget {
-  const PasswordScreen({super.key});
+  final Account accountLogin;
+  const PasswordScreen({super.key, required this.accountLogin});
 
   @override
   State<PasswordScreen> createState() => _PasswordScreenState();
@@ -16,7 +16,6 @@ class _PasswordScreenState extends State<PasswordScreen> {
   final passwordController = TextEditingController();
   bool _isCorrectPassword = false;
   bool _isPressed = false;
-  late Account accountLogin;
   String _warningMessage = 'Wrong password';
 
   @override
@@ -34,17 +33,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
     });
   }
 
-  void _checkCorrectPassword(String password) async {
-    List<Account> accounts = await DatabaseAccount.instance.readAllAccounts();
+  void _checkCorrectPassword(String password) {
     setState(() {
       _isCorrectPassword = false;
       _isPressed = false;
-      for (var i = 0; i < accounts.length; i++) {
-        if (password == accounts[i].password) {
-          _isCorrectPassword = true;
-          accountLogin = accounts[i];
-          break;
-        }
+      if (password == widget.accountLogin.password) {
+        _isCorrectPassword = true;
       }
     });
   }
@@ -55,7 +49,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => LoadingScreen(
-          accountLogin: accountLogin,
+          accountLogin: widget.accountLogin,
         ),
       ),
     ).then(
