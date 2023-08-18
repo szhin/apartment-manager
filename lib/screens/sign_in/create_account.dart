@@ -1,7 +1,6 @@
 import 'package:apartment_manager/components/inkwell_text.dart';
 import 'package:apartment_manager/components/my_textfield.dart';
 import 'package:apartment_manager/models/account.dart';
-import 'package:apartment_manager/screens/sign_in/email_screen.dart';
 import 'package:apartment_manager/services/database_account.dart';
 import 'package:apartment_manager/widgets/loading_to_email.dart';
 import 'package:email_validator/email_validator.dart';
@@ -44,17 +43,17 @@ class _CreateAccountState extends State<CreateAccount> {
     });
   }
 
-  void addAccount(BuildContext context) async {
-    _checkAllFieldFilled();
-    _checkDifferentInformation();
-    print('\n\n\n');
-    print('_isSameInfo1');
-    print(_isSameInfo);
-    print('_isAllFieldsFilled');
-    print(_isAllFieldsFilled);
-    print('_isEmailValid');
-    print(_isEmailValid);
-    print('\n\n\n');
+  void addAccount() async {
+    // Check same information
+    List<Account> accounts = await DatabaseAccount.instance.readAllAccounts();
+    bool isSameInfo = accounts.any((account) =>
+        account.email == email.text || account.username == username.text);
+
+    setState(() {
+      _isSameInfo = isSameInfo;
+    });
+
+    // add account
     if (_isAllFieldsFilled && !_isSameInfo && _isEmailValid) {
       Account newAccount = Account(
         username: username.text,
@@ -68,36 +67,24 @@ class _CreateAccountState extends State<CreateAccount> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const EmailScreen(),
+          builder: (context) => const LoadingToEmail(),
         ),
       );
     }
   }
 
   void _checkAllFieldFilled() {
+    bool allChecked = name.text.isNotEmpty &&
+        phone.text.isNotEmpty &&
+        email.text.isNotEmpty &&
+        username.text.isNotEmpty &&
+        password.text.isNotEmpty;
     setState(() {
-      _isAllFieldsFilled = name.text.isNotEmpty &&
-          email.text.isNotEmpty &&
-          phone.text.isNotEmpty &&
-          password.text.isNotEmpty &&
-          username.text.isNotEmpty;
+      _isAllFieldsFilled = allChecked;
     });
   }
 
-  void _checkDifferentInformation() async {
-    List<Account> accounts = await DatabaseAccount.instance.readAllAccounts();
-    bool isSameInfo = accounts.any((account) =>
-        account.email == email.text || account.username == username.text);
-    print('\n\n\n');
-    print(_isSameInfo);
-    print(isSameInfo);
-    print('\n\n\n');
-
-    setState(() {
-      _isSameInfo = isSameInfo;
-      print(_isSameInfo);
-    });
-  }
+  // void _checkDifferentInformation() async {}
 
   void _checkEmailFormat(String email) {
     setState(() {
@@ -186,7 +173,8 @@ class _CreateAccountState extends State<CreateAccount> {
                 margin: 0,
                 isValidEmail: _isEmailValid,
                 onTap: () async {
-                  addAccount(context);
+                  _checkAllFieldFilled();
+                  addAccount();
                 },
               ),
             ],
