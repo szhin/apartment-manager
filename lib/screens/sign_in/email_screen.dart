@@ -99,75 +99,76 @@ class _EmailScreenState extends State<EmailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(32),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 70),
-                const Text(
-                  'Your business\nemail address',
-                  style: TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                  ),
+      appBar: AppBar(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 70),
+              const Text(
+                'Your business\nemail address',
+                style: TextStyle(
+                  fontSize: 48,
+                  fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(height: 32),
-                _isPressed
-                    ? Text(
-                        warningMessage,
-                        style: const TextStyle(color: Colors.red),
-                      )
-                    : const Text(
-                        '',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                MyTextField(
-                  controller: emailController,
-                  hintText: 'Type your email',
-                  onChanged: (text) {
-                    _checkEmailFormat(text);
-                  },
-                  icon: Icons.email,
-                ),
-                const SizedBox(height: 24),
-                InkWellText(
-                  text: 'Continue',
-                  margin: 0,
-                  isValidEmail: _isEmailValid,
-                  onTap: () {
-                    setState(() {
-                      _isPressed = true;
-                    });
-                    if (_isEmailCorrect) {
-                      toPasswordScreen(context);
-                    }
-                  },
-                ),
-                const SizedBox(height: 32),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        toCreateAccountScreen(context);
-                      },
-                      child: const Text(
-                        'New user? Create an account',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
+              ),
+              const SizedBox(height: 32),
+              _isPressed
+                  ? Text(
+                      warningMessage,
+                      style: const TextStyle(color: Colors.red),
+                    )
+                  : const Text(
+                      '',
+                      style: TextStyle(color: Colors.red),
+                    ),
+              MyTextField(
+                controller: emailController,
+                hintText: 'Type your email',
+                onChanged: (text) {
+                  _checkEmailFormat(text);
+                },
+                icon: Icons.email,
+              ),
+              const SizedBox(height: 24),
+              InkWellText(
+                text: 'Continue',
+                margin: 0,
+                isValidEmail: _isEmailValid,
+                onTap: () {
+                  setState(() {
+                    _isPressed = true;
+                  });
+                  if (_isEmailCorrect) {
+                    toPasswordScreen(context);
+                  }
+                },
+              ),
+              const SizedBox(height: 32),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      toCreateAccountScreen(context);
+                    },
+                    child: const Text(
+                      'New user? Create an account',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
                       ),
                     ),
-                  ],
-                )
-              ],
-            ),
+                  ),
+                ],
+              )
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:apartment_manager/screens/accounts_data/accounts_data_screen.dart';
 import 'package:apartment_manager/screens/apartment/find_apartment_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -28,9 +29,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => FindApartmentScreen(
-          accountLogin: widget.accountLogin,
-        ),
+        builder: (context) => widget.accountLogin.username != 'admin'
+            ? FindApartmentScreen(
+                accountLogin: widget.accountLogin,
+              )
+            : const AccountsDataScreen(),
       ),
     );
   }

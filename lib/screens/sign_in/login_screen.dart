@@ -94,6 +94,7 @@ class LoginScreen extends StatelessWidget {
                         isValidEmail: true,
                         onTap: () {
                           toEmailScreen(context);
+                          // DatabaseAccount.instance.recreateTable();
                         },
                       )
                     ],

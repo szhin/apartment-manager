@@ -1,9 +1,9 @@
 import 'dart:ui';
 
+import 'package:apartment_manager/models/transaction.dart';
 import 'package:flutter/material.dart';
 
 import '../../../models/account.dart';
-import '../../../models/transaction.dart';
 import '../../../widgets/menu_bottom.dart';
 import '../../payment/top_up_screen.dart';
 import '../../payment/transfer_screen.dart';
@@ -42,6 +42,24 @@ class _PaymentScreenState extends State<PaymentScreen> {
       }
     }
 
+    void toWithdrawScreen(BuildContext context) async {
+      final updatedAmount = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => WithdrawScreen(
+            title: 'Withdraw',
+            accountLogin: widget.accountLogin,
+          ),
+        ),
+      );
+
+      if (updatedAmount != null) {
+        setState(() {
+          widget.accountLogin.amountMoney = updatedAmount;
+        });
+      }
+    }
+
     void toTransferScreen(BuildContext context) {
       Navigator.push(
         context,
@@ -54,34 +72,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
       );
     }
 
-    void toWithdrawScreen(BuildContext context) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => WithdrawScreen(
-            title: 'Withdraw',
-            accountLogin: widget.accountLogin,
-          ),
-        ),
-      );
-    }
-
-    List<Transaction> transactions = [
-      Transaction(
+    List<TransactionHistory> transactions = [
+      TransactionHistory(
         date: DateTime.now().subtract(
           const Duration(days: 2),
         ),
         nameApartment: 'Payment for rent',
         amount: -1000.0,
       ),
-      Transaction(
+      TransactionHistory(
         date: DateTime.now().subtract(
           const Duration(days: 1),
         ),
         nameApartment: 'Grocery shopping',
         amount: -50.0,
       ),
-      Transaction(
+      TransactionHistory(
         date: DateTime.now(),
         nameApartment: 'Salary deposit',
         amount: 2000.0,
@@ -288,7 +294,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: transactions.length,
                             itemBuilder: (context, index) {
-                              Transaction transaction = transactions[index];
+                              TransactionHistory transaction =
+                                  transactions[index];
                               return Card(
                                 color: const Color.fromARGB(255, 252, 241, 243),
                                 elevation: 2,

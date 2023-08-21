@@ -11,14 +11,14 @@ class DatabaseAccount {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('accounts1.db');
+    _database = await _initDB('accounts3.db');
     return _database!;
   }
 
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
-    return await openDatabase(path, version: 2, onCreate: _createDB);
+    return await openDatabase(path, version: 3, onCreate: _createDB);
   }
 
   Future _createDB(Database db, int version) async {
@@ -114,12 +114,12 @@ CREATE TABLE $tableAccounts (
     db.close();
   }
 
-  Future<void> recreateTable() async {
+  Future<void> dropTable() async {
     final db = await instance.database;
     await db.execute('DROP TABLE IF EXISTS $tableAccounts');
-    await _createDB(db, 3);
   }
 
+  //----------------------Update amountMoney----------------------------
   Future<void> updateAmountMoney(int accountId, double newAmount) async {
     final db = await instance.database;
 
@@ -132,6 +132,23 @@ CREATE TABLE $tableAccounts (
 
     if (updateResult != 1) {
       throw Exception('Failed to update amountMoney');
+    }
+  }
+
+  //-----------------------Change Information not same money-----------------------------
+  Future<void> changeElementInfo(
+      int accountId, String accountField, String newInfo) async {
+    final db = await instance.database;
+
+    final updateResult = await db.update(
+      tableAccounts,
+      {accountField: newInfo},
+      where: '${AccountFields.id} = ?',
+      whereArgs: [accountId],
+    );
+
+    if (updateResult != 1) {
+      throw Exception('Failed to update information $accountField');
     }
   }
 }
