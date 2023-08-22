@@ -35,6 +35,7 @@ class App extends StatelessWidget {
       // remove the red banner
       theme: theme,
       home: const LoginScreen(),
+      // home: const TransactionsDataScreen(),
     );
   }
 }

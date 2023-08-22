@@ -1,4 +1,4 @@
-import 'package:apartment_manager/models/transaction.dart';
+import 'package:apartment_manager/models/transaction_history.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -11,14 +11,14 @@ class DatabaseTransactionHistory {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('transaction.db');
+    _database = await _initDB('transactionsHistory.db');
     return _database!;
   }
 
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return await openDatabase(path, version: 3, onCreate: _createDB);
   }
 
   Future _createDB(Database db, int version) async {
@@ -32,7 +32,8 @@ CREATE TABLE $tableTransactionsHistory (
   ${TransactionHistoryFields.id} $idType,
   ${TransactionHistoryFields.date} $dateTimeType,
   ${TransactionHistoryFields.nameApartment} $textType,
-  ${TransactionHistoryFields.amount} $doubleType
+  ${TransactionHistoryFields.amount} $doubleType,
+  ${TransactionHistoryFields.type} $textType
 )
 ''');
   }
@@ -86,7 +87,7 @@ CREATE TABLE $tableTransactionsHistory (
   Future<List<TransactionHistory>> readAllTransactionHistorys() async {
     final db = await instance.database;
 
-    final orderBy = '${TransactionHistoryFields.date} DESC';
+    final orderBy = '${TransactionHistoryFields.id} DESC';
     final result = await db.query(
       tableTransactionsHistory,
       orderBy: orderBy,

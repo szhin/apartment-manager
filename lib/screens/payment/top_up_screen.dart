@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:apartment_manager/models/transaction_history.dart';
 import 'package:apartment_manager/screens/setting/components/leading_appbar_setting.dart';
 import 'package:apartment_manager/screens/setting/components/title_appbar_setting.dart';
+import 'package:apartment_manager/services/database_transaction_history.dart';
 import 'package:apartment_manager/widgets/menu_bottom.dart';
 import 'package:flutter/material.dart';
 
@@ -37,6 +39,15 @@ class _TopUpScreenState extends State<TopUpScreen> {
           double.parse(amount.text) + widget.accountLogin.amountMoney;
       await DatabaseAccount.instance
           .updateAmountMoney(widget.accountLogin.id!, newAmount);
+      TransactionHistory newTransactionHistory = TransactionHistory(
+        nameApartment: 'nameApartment',
+        amount: double.parse(amount.text),
+        type: 'Top Up',
+      );
+
+      await DatabaseTransactionHistory.instance
+          .addTransaction(newTransactionHistory);
+
       setState(() {
         widget.accountLogin.amountMoney = newAmount;
         amount.text = '';

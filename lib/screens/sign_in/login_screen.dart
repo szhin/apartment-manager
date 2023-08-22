@@ -95,6 +95,7 @@ class LoginScreen extends StatelessWidget {
                         onTap: () {
                           toEmailScreen(context);
                           // DatabaseAccount.instance.recreateTable();
+                          // DatabaseTransactionHistory.instance.dropTable();
                         },
                       )
                     ],

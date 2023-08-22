@@ -1,6 +1,7 @@
 import 'dart:ui';
 
-import 'package:apartment_manager/models/transaction.dart';
+import 'package:apartment_manager/models/transaction_history.dart';
+import 'package:apartment_manager/services/database_transaction_history.dart';
 import 'package:flutter/material.dart';
 
 import '../../../models/account.dart';
@@ -22,6 +23,26 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
+  List<TransactionHistory> transactions = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadTransactions();
+  }
+
+  Future<void> loadTransactions() async {
+    try {
+      final transactionHistoryList = await DatabaseTransactionHistory.instance
+          .readAllTransactionHistorys();
+      setState(() {
+        transactions = transactionHistoryList;
+      });
+    } catch (e) {
+      print("Error loading transactions: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     void toTopUpScreen(BuildContext context) async {
@@ -38,6 +59,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       if (updatedAmount != null) {
         setState(() {
           widget.accountLogin.amountMoney = updatedAmount;
+          loadTransactions();
         });
       }
     }
@@ -56,6 +78,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       if (updatedAmount != null) {
         setState(() {
           widget.accountLogin.amountMoney = updatedAmount;
+          loadTransactions();
         });
       }
     }
@@ -72,30 +95,21 @@ class _PaymentScreenState extends State<PaymentScreen> {
       );
     }
 
-    List<TransactionHistory> transactions = [
-      TransactionHistory(
-        date: DateTime.now().subtract(
-          const Duration(days: 2),
-        ),
-        nameApartment: 'Payment for rent',
-        amount: -1000.0,
-      ),
-      TransactionHistory(
-        date: DateTime.now().subtract(
-          const Duration(days: 1),
-        ),
-        nameApartment: 'Grocery shopping',
-        amount: -50.0,
-      ),
-      TransactionHistory(
-        date: DateTime.now(),
-        nameApartment: 'Salary deposit',
-        amount: 2000.0,
-      ),
-
-      // Thêm các giao dịch khác tại đây
-    ];
-    transactions.sort((a, b) => b.date.compareTo(a.date));
+    // List<TransactionHistory> transactions = [
+    //   TransactionHistory(
+    //     date: DateTime.now().subtract(
+    //       const Duration(days: 1),
+    //     ),
+    //     nameApartment: 'Grocery shopping',
+    //     amount: -50.0,
+    //   ),
+    //   TransactionHistory(
+    //     date: DateTime.now(),
+    //     nameApartment: 'Salary deposit',
+    //     amount: 2000.0,
+    //   ),
+    // ];
+    // transactions.sort((a, b) => b.date.compareTo(a.date));
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -289,35 +303,66 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: transactions.length,
-                            itemBuilder: (context, index) {
-                              TransactionHistory transaction =
-                                  transactions[index];
-                              return Card(
-                                color: const Color.fromARGB(255, 252, 241, 243),
-                                elevation: 2,
-                                margin: const EdgeInsets.symmetric(vertical: 6),
-                                child: ListTile(
-                                  title: Text(transaction.nameApartment),
-                                  subtitle: Text(
-                                    '${transaction.date.day}/${transaction.date.month}/${transaction.date.year}',
-                                  ),
-                                  trailing: Text(
-                                    '\$${transaction.amount.toStringAsFixed(2)}',
-                                    style: TextStyle(
-                                      color: transaction.amount < 0
-                                          ? Colors.red
-                                          : Colors.green,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                          const SizedBox(height: 12),
+                          transactions.isEmpty
+                              ? const Text('No transactions')
+                              : ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: transactions.length,
+                                  itemBuilder: (context, index) {
+                                    TransactionHistory transaction =
+                                        transactions[index];
+                                    return Card(
+                                      // color: Color.fromARGB(255, 114, 114, 114),
+                                      color: Colors.black,
+                                      elevation: 2,
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 6),
+                                      child: ListTile(
+                                        title: transaction.type != ''
+                                            ? Text(
+                                                transaction.type,
+                                                style: const TextStyle(
+                                                  fontSize: 17,
+                                                  color: Colors.white,
+                                                ),
+                                              )
+                                            : const Text(
+                                                'Name Apartment',
+                                                style: TextStyle(
+                                                  fontSize: 17,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                        subtitle: Text(
+                                          '${transaction.date.hour}:${transaction.date.minute}   ${transaction.date.day}/${transaction.date.month}/${transaction.date.year}',
+                                          style: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 183, 182, 182),
+                                              fontSize: 13),
+                                        ),
+                                        trailing: transaction.type == 'Top Up'
+                                            ? Text(
+                                                '\$${transaction.amount.toStringAsFixed(2)}',
+                                                style: const TextStyle(
+                                                  color: Colors.green,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                ),
+                                              )
+                                            : Text(
+                                                '\$-${transaction.amount.toStringAsFixed(2)}',
+                                                style: const TextStyle(
+                                                  color: Colors.red,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                      ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
-                          ),
                           const SizedBox(
                             height: 85,
                           ),

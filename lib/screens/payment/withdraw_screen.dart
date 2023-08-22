@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 
 import '../../../models/account.dart';
 import '../../components/inkwell_text.dart';
+import '../../models/transaction_history.dart';
 import '../../services/database_account.dart';
+import '../../services/database_transaction_history.dart';
 
 class WithdrawScreen extends StatefulWidget {
   final String title;
@@ -39,6 +41,16 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
       if (newAmount >= 0) {
         await DatabaseAccount.instance
             .updateAmountMoney(widget.accountLogin.id!, newAmount);
+
+        TransactionHistory newTransactionHistory = TransactionHistory(
+          nameApartment: 'nameApartment',
+          amount: double.parse(amount.text),
+          type: 'Withdraw',
+        );
+
+        await DatabaseTransactionHistory.instance
+            .addTransaction(newTransactionHistory);
+
         setState(() {
           widget.accountLogin.amountMoney = newAmount;
           amount.text = '';
