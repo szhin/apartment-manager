@@ -4,7 +4,7 @@ final shinApartments = [
   Apartment(
     title: 'Shin Smile',
     date: DateTime(2023, 06, 23),
-    price: '\$5,680',
+    price: 5680.50,
     imagePath: 'assets/images/apartments/shin_smile.jpeg',
     recommended: false,
     address: 'Ha Noi, Viet Nam',
@@ -13,8 +13,8 @@ final shinApartments = [
   ),
   Apartment(
     title: 'Shin Garden',
-    date: DateTime(2023, 01, 06),
-    price: '\$2,235',
+    date: DateTime(2023, 08, 10),
+    price: 2235.50,
     imagePath: 'assets/images/apartments/shin_garden.jpeg',
     recommended: false,
     address: 'Ho Chi Minh, Viet Nam',
@@ -24,7 +24,7 @@ final shinApartments = [
   Apartment(
     title: 'Shin Plaza',
     date: DateTime(2022, 12, 06),
-    price: '\$4,650',
+    price: 4650.50,
     imagePath: 'assets/images/apartments/shin_plaza.jpeg',
     recommended: true,
     address: 'Ho Chi Minh, Viet Nam',
@@ -34,7 +34,7 @@ final shinApartments = [
   Apartment(
     title: 'Shin Moon',
     date: DateTime(2022, 07, 10),
-    price: '\$3,360',
+    price: 3360.50,
     imagePath: 'assets/images/apartments/shin_moon.jpeg',
     recommended: true,
     address: 'Dubai, UAE',
@@ -43,8 +43,8 @@ final shinApartments = [
   ),
   Apartment(
     title: 'Shin Ancient',
-    date: DateTime(2022, 07, 10),
-    price: '\$5,000',
+    date: DateTime(2023, 07, 29),
+    price: 5000.50,
     imagePath: 'assets/images/apartments/shin_ancient.jpeg',
     recommended: false,
     address: 'Hue, Viet Nam',
@@ -53,8 +53,8 @@ final shinApartments = [
   ),
   Apartment(
     title: 'Shin Sky',
-    date: DateTime(2023, 06, 23),
-    price: '\$2,112',
+    date: DateTime(2023, 08, 23),
+    price: 2112.50,
     imagePath: 'assets/images/apartments/shin_sky.jpeg',
     recommended: true,
     address: 'Ho Chi Minh, Viet Nam',
@@ -64,7 +64,7 @@ final shinApartments = [
   Apartment(
     title: 'Shin',
     date: DateTime(2022, 12, 21),
-    price: '\$1,235',
+    price: 1235.50,
     imagePath: 'assets/images/apartments/shin.jpeg',
     recommended: true,
     address: 'Hue, Viet Nam',

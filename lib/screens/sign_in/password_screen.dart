@@ -86,8 +86,14 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 controller: passwordController,
                 hintText: 'Your password',
                 obscureText: true,
-                onChanged: (password) {
-                  _checkCorrectPassword(password);
+                onChanged: (text) {
+                  final trimmedText =
+                      text.replaceAll(' ', ''); // Remove whitespaces
+                  passwordController.text = trimmedText;
+                  passwordController.selection = TextSelection.fromPosition(
+                    TextPosition(offset: trimmedText.length),
+                  );
+                  _checkCorrectPassword(text);
                 },
                 icon: Icons.lock,
               ),

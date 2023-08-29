@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:apartment_manager/models/apartment.dart';
 import 'package:apartment_manager/screens/setting/components/leading_appbar_setting.dart';
 import 'package:apartment_manager/screens/setting/components/title_appbar_setting.dart';
+import 'package:apartment_manager/screens/setting/screens/payment_screen.dart';
 import 'package:apartment_manager/widgets/menu_bottom.dart';
 import 'package:flutter/material.dart';
 
@@ -11,19 +13,26 @@ import '../../models/transaction_history.dart';
 import '../../services/database_account.dart';
 import '../../services/database_transaction_history.dart';
 
-class WithdrawScreen extends StatefulWidget {
+class BookNowScreen extends StatefulWidget {
   final String title;
   final Account accountLogin;
-  const WithdrawScreen(
-      {super.key, required this.title, required this.accountLogin});
+  final Apartment apartment;
+
+  const BookNowScreen({
+    super.key,
+    required this.title,
+    required this.accountLogin,
+    required this.apartment,
+  });
 
   @override
-  State<WithdrawScreen> createState() => _WithdrawScreenState();
+  State<BookNowScreen> createState() => _BookNowScreenState();
 }
 
-class _WithdrawScreenState extends State<WithdrawScreen> {
+class _BookNowScreenState extends State<BookNowScreen> {
   String selectedCurrency = 'USD';
   bool _isExceeded = false;
+  bool _isNotSameMoney = false;
   final amount = TextEditingController();
 
   void toChangedCurrency(String newCurrency) {
@@ -36,16 +45,31 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
 
   Future<void> updateAccountAmount() async {
     try {
-      final double newAmount =
-          widget.accountLogin.amountMoney - double.parse(amount.text);
-      if (newAmount >= 0) {
+      final double totalMoney = widget.accountLogin.amountMoney;
+      final double bookNowMoney = widget.apartment.price;
+      final double typedMoney = double.parse(amount.text);
+      final double newAmount = totalMoney - bookNowMoney;
+
+      if (totalMoney - typedMoney < 0) {
+        setState(() {
+          _isExceeded = true;
+          _isNotSameMoney = false;
+          amount.text = '';
+        });
+      } else if (typedMoney != bookNowMoney) {
+        setState(() {
+          _isExceeded = false;
+          _isNotSameMoney = true;
+          amount.text = '';
+        });
+      } else {
         await DatabaseAccount.instance
             .updateAmountMoney(widget.accountLogin.id!, newAmount);
 
         TransactionHistory newTransactionHistory = TransactionHistory(
-          nameApartment: 'nameApartment',
-          amount: double.parse(amount.text),
-          type: 'Withdraw',
+          nameApartment: widget.apartment.title,
+          amount: bookNowMoney,
+          type: '',
           username: widget.accountLogin.username,
         );
 
@@ -55,13 +79,18 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
         setState(() {
           widget.accountLogin.amountMoney = newAmount;
           amount.text = '';
+          _isExceeded = false;
+          _isNotSameMoney = false;
         });
-        Navigator.pop(context, newAmount);
-      } else {
-        _isExceeded = true;
-        setState(() {
-          amount.text = '';
-        });
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PaymentScreen(
+              accountLogin: widget.accountLogin,
+              title: 'Payment',
+            ),
+          ),
+        );
       }
     } catch (e) {
       print("Error updating account amount: $e");
@@ -137,14 +166,6 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Choose cards',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
                           const SizedBox(height: 18),
                           Stack(
                             children: [
@@ -190,15 +211,36 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                             ],
                           ),
                           const SizedBox(height: 30),
-                          const Text(
-                            'Amount',
-                            style: TextStyle(
+                          Text(
+                            '${widget.apartment.title} Apartment',
+                            style: const TextStyle(
                               color: Colors.black,
-                              fontSize: 24,
+                              fontSize: 28,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              const Text(
+                                'Amount to be paid is',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                '\$${widget.apartment.price}',
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 236, 192, 49),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
                           _isExceeded
                               ? const Text(
                                   'Exceed the amount in your card',
@@ -207,7 +249,15 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                                     fontSize: 16,
                                   ),
                                 )
-                              : const Text(''),
+                              : _isNotSameMoney
+                                  ? const Text(
+                                      'Please enter enough amount',
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 16,
+                                      ),
+                                    )
+                                  : const Text(''),
                           const SizedBox(height: 10),
                           Container(
                             padding: const EdgeInsets.all(14),
@@ -228,7 +278,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                                           fontSize: 14, color: Colors.grey),
                                     ),
                                     Text(
-                                      'Max \$20,000.00',
+                                      'Max \$20.000.00',
                                       style: TextStyle(
                                           fontSize: 14, color: Colors.grey),
                                     ),
@@ -310,7 +360,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                           ),
                           const SizedBox(height: 35),
                           InkWellText(
-                            text: 'Withdraw Money',
+                            text: 'Send Money',
                             margin: 0,
                             isValidEmail: true,
                             onTap: () {

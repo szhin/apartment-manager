@@ -11,14 +11,14 @@ class DatabaseTransactionHistory {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('transactionsHistory.db');
+    _database = await _initDB('transactionsHistory1.db');
     return _database!;
   }
 
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
-    return await openDatabase(path, version: 3, onCreate: _createDB);
+    return await openDatabase(path, version: 4, onCreate: _createDB);
   }
 
   Future _createDB(Database db, int version) async {
@@ -33,7 +33,8 @@ CREATE TABLE $tableTransactionsHistory (
   ${TransactionHistoryFields.date} $dateTimeType,
   ${TransactionHistoryFields.nameApartment} $textType,
   ${TransactionHistoryFields.amount} $doubleType,
-  ${TransactionHistoryFields.type} $textType
+  ${TransactionHistoryFields.type} $textType,
+  ${TransactionHistoryFields.username} $textType
 )
 ''');
   }

@@ -6,6 +6,7 @@ class TransactionHistoryFields {
   static String nameApartment = 'nameApartment';
   static String amount = 'amount';
   static String type = 'type';
+  static String username = 'username';
 
   static final List<String> values = [
     id,
@@ -13,6 +14,7 @@ class TransactionHistoryFields {
     nameApartment,
     amount,
     type,
+    username,
   ];
 }
 
@@ -22,6 +24,7 @@ class TransactionHistory {
   final String nameApartment;
   double amount;
   final String type;
+  final String username;
 
   TransactionHistory({
     this.id,
@@ -29,6 +32,7 @@ class TransactionHistory {
     required this.nameApartment,
     required this.amount,
     required this.type,
+    required this.username,
   }) : date = date ?? DateTime.now();
 
   static TransactionHistory fromJson(Map<String, Object?> json) =>
@@ -38,6 +42,7 @@ class TransactionHistory {
         nameApartment: json[TransactionHistoryFields.nameApartment] as String,
         amount: json[TransactionHistoryFields.amount] as double,
         type: json[TransactionHistoryFields.type] as String,
+        username: json[TransactionHistoryFields.username] as String,
       );
 
   Map<String, Object?> toJson() => {
@@ -46,6 +51,7 @@ class TransactionHistory {
         TransactionHistoryFields.nameApartment: nameApartment,
         TransactionHistoryFields.amount: amount,
         TransactionHistoryFields.type: type,
+        TransactionHistoryFields.username: username,
       };
 
   TransactionHistory copy({
@@ -54,6 +60,7 @@ class TransactionHistory {
     String? nameApartment,
     double? amount,
     String? type,
+    String? username,
   }) =>
       TransactionHistory(
         id: id ?? this.id,
@@ -61,5 +68,6 @@ class TransactionHistory {
         nameApartment: nameApartment ?? this.nameApartment,
         amount: amount ?? this.amount,
         type: type ?? this.type,
+        username: username ?? this.username,
       );
 }

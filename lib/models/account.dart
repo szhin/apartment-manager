@@ -8,6 +8,7 @@ class AccountFields {
   static String name = 'name';
   static String phoneNumber = 'phoneNumber';
   static String amountMoney = 'amountMoney';
+  // static String bookedApartments = 'bookedApartments';
 
   static final List<String> values = [
     id,
@@ -17,6 +18,7 @@ class AccountFields {
     name,
     phoneNumber,
     amountMoney
+    // bookedApartments
   ];
 }
 
@@ -28,6 +30,7 @@ class Account {
   final String name;
   final String phoneNumber;
   double amountMoney;
+  // final List<Apartment>? bookedApartments;
 
   Account({
     this.id,
@@ -37,6 +40,7 @@ class Account {
     required this.name,
     required this.phoneNumber,
     required this.amountMoney,
+    // this.bookedApartments,
   });
 
   static Account fromJson(Map<String, Object?> json) => Account(
@@ -47,6 +51,10 @@ class Account {
         name: json[AccountFields.name] as String,
         phoneNumber: json[AccountFields.phoneNumber] as String,
         amountMoney: json[AccountFields.amountMoney] as double,
+        // bookedApartments: (json[AccountFields.bookedApartments] as List?)
+        //     ?.map((apartmentJson) =>
+        //         Apartment.fromJson(apartmentJson as Map<String, Object?>))
+        //     .toList(),
       );
 
   Map<String, Object?> toJson() => {
@@ -57,6 +65,8 @@ class Account {
         AccountFields.name: name,
         AccountFields.phoneNumber: phoneNumber,
         AccountFields.amountMoney: amountMoney,
+        // AccountFields.bookedApartments:
+        //     bookedApartments?.map((apartment) => apartment.toJson()).toList(),
       };
   Account copy({
     int? id,
@@ -66,6 +76,7 @@ class Account {
     String? name,
     String? phoneNumber,
     double? amountMoney,
+    // List<Apartment>? bookedApartments,
   }) =>
       Account(
         id: id ?? this.id,
@@ -75,5 +86,14 @@ class Account {
         name: name ?? this.name,
         phoneNumber: phoneNumber ?? this.phoneNumber,
         amountMoney: amountMoney ?? this.amountMoney,
+        // bookedApartments: bookedApartments ?? this.bookedApartments,
       );
+
+  // Account addBookedApartment(Apartment apartment) {
+  //   List<Apartment> updatedBookedApartments =
+  //       List.from(bookedApartments as Iterable);
+  //   updatedBookedApartments.add(apartment);
+
+  //   return copy(bookedApartments: updatedBookedApartments);
+  // }
 }

@@ -23,6 +23,7 @@ class _CreateAccountState extends State<CreateAccount> {
   bool _isAllFieldsFilled = false;
   bool _isEmailValid = false;
   bool _isSameInfo = false;
+  String textInformFilled = '';
 
   @override
   void initState() {
@@ -40,6 +41,7 @@ class _CreateAccountState extends State<CreateAccount> {
       _isAllFieldsFilled = false;
       _isEmailValid = false;
       _isSameInfo = false;
+      textInformFilled = '';
     });
   }
 
@@ -63,6 +65,9 @@ class _CreateAccountState extends State<CreateAccount> {
         phoneNumber: phone.text,
         amountMoney: 0.0,
       );
+      setState(() {
+        textInformFilled = '';
+      });
       await DatabaseAccount.instance.addAccount(newAccount);
       Navigator.push(
         context,
@@ -70,6 +75,10 @@ class _CreateAccountState extends State<CreateAccount> {
           builder: (context) => const LoadingToEmail(),
         ),
       );
+    } else if (!_isAllFieldsFilled) {
+      setState(() {
+        textInformFilled = 'All fields must be filled';
+      });
     }
   }
 
@@ -128,7 +137,14 @@ class _CreateAccountState extends State<CreateAccount> {
               MyTextField(
                 controller: name,
                 hintText: 'Your name',
-                onChanged: () {},
+                onChanged: (text) {
+                  final trimmedText =
+                      text.replaceAll('  ', ' '); // Remove whitespaces
+                  name.text = trimmedText;
+                  name.selection = TextSelection.fromPosition(
+                    TextPosition(offset: trimmedText.length),
+                  );
+                },
                 icon: Icons.people,
                 keyboardType: false,
               ),
@@ -136,15 +152,36 @@ class _CreateAccountState extends State<CreateAccount> {
               MyTextField(
                 controller: phone,
                 hintText: 'Phone number',
-                onChanged: () {},
+                onChanged: (text) {
+                  final trimmedText =
+                      text.replaceAll(' ', ''); // Remove whitespaces
+                  phone.text = trimmedText;
+                  phone.selection = TextSelection.fromPosition(
+                    TextPosition(offset: trimmedText.length),
+                  );
+                },
                 icon: Icons.phone,
                 keyboardType: true,
               ),
               const SizedBox(height: 18),
+              !_isEmailValid && email.text.isNotEmpty
+                  ? const Text(
+                      'Invalid email format',
+                      style: TextStyle(
+                        color: Colors.red,
+                      ),
+                    )
+                  : const SizedBox(height: 0),
               MyTextField(
                 controller: email,
                 hintText: 'Email address',
                 onChanged: (text) {
+                  final trimmedText =
+                      text.replaceAll(' ', ''); // Remove whitespaces
+                  email.text = trimmedText;
+                  email.selection = TextSelection.fromPosition(
+                    TextPosition(offset: trimmedText.length),
+                  );
                   _checkEmailFormat(text);
                 },
                 icon: Icons.email,
@@ -154,7 +191,14 @@ class _CreateAccountState extends State<CreateAccount> {
               MyTextField(
                 controller: username,
                 hintText: 'Username',
-                onChanged: () {},
+                onChanged: (text) {
+                  final trimmedText =
+                      text.replaceAll(' ', ''); // Remove whitespaces
+                  username.text = trimmedText;
+                  username.selection = TextSelection.fromPosition(
+                    TextPosition(offset: trimmedText.length),
+                  );
+                },
                 icon: Icons.people_alt,
                 keyboardType: false,
               ),
@@ -163,10 +207,33 @@ class _CreateAccountState extends State<CreateAccount> {
                 controller: password,
                 hintText: 'Password',
                 obscureText: true,
-                onChanged: () {},
+                onChanged: (text) {
+                  final trimmedText =
+                      text.replaceAll(' ', ''); // Remove whitespaces
+                  password.text = trimmedText;
+                  password.selection = TextSelection.fromPosition(
+                    TextPosition(offset: trimmedText.length),
+                  );
+                },
                 icon: Icons.password,
                 keyboardType: false,
               ),
+              !_isAllFieldsFilled
+                  ? Text(
+                      textInformFilled,
+                      style: const TextStyle(
+                        color: Colors.red,
+                      ),
+                    )
+                  : const SizedBox(height: 0),
+              _isSameInfo
+                  ? const Text(
+                      'Username or email already exists',
+                      style: TextStyle(
+                        color: Colors.red,
+                      ),
+                    )
+                  : const SizedBox(height: 0),
               const SizedBox(height: 32),
               InkWellText(
                 text: 'Create Account',

@@ -129,6 +129,12 @@ class _EmailScreenState extends State<EmailScreen> {
                 controller: emailController,
                 hintText: 'Type your email',
                 onChanged: (text) {
+                  final trimmedText =
+                      text.replaceAll(' ', ''); // Remove whitespaces
+                  emailController.text = trimmedText;
+                  emailController.selection = TextSelection.fromPosition(
+                    TextPosition(offset: trimmedText.length),
+                  );
                   _checkEmailFormat(text);
                 },
                 icon: Icons.email,

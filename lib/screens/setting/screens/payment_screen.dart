@@ -1,13 +1,13 @@
 import 'dart:ui';
 
 import 'package:apartment_manager/models/transaction_history.dart';
+import 'package:apartment_manager/screens/apartment/find_apartment_screen.dart';
 import 'package:apartment_manager/services/database_transaction_history.dart';
 import 'package:flutter/material.dart';
 
 import '../../../models/account.dart';
 import '../../../widgets/menu_bottom.dart';
 import '../../payment/top_up_screen.dart';
-import '../../payment/transfer_screen.dart';
 import '../../payment/withdraw_screen.dart';
 import '../components/leading_appbar_setting.dart';
 import '../components/title_appbar_setting.dart';
@@ -33,8 +33,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   Future<void> loadTransactions() async {
     try {
-      final transactionHistoryList = await DatabaseTransactionHistory.instance
+      final allTransactionHistory = await DatabaseTransactionHistory.instance
           .readAllTransactionHistorys();
+      final transactionHistoryList = allTransactionHistory
+          .where((transaction) =>
+              transaction.username == widget.accountLogin.username)
+          .toList();
       setState(() {
         transactions = transactionHistoryList;
       });
@@ -83,33 +87,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
       }
     }
 
-    void toTransferScreen(BuildContext context) {
+    void toFindApartmentScreen(BuildContext context) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => TransferScreen(
-            title: 'Transfer',
+          builder: (context) => FindApartmentScreen(
             accountLogin: widget.accountLogin,
           ),
         ),
       );
     }
-
-    // List<TransactionHistory> transactions = [
-    //   TransactionHistory(
-    //     date: DateTime.now().subtract(
-    //       const Duration(days: 1),
-    //     ),
-    //     nameApartment: 'Grocery shopping',
-    //     amount: -50.0,
-    //   ),
-    //   TransactionHistory(
-    //     date: DateTime.now(),
-    //     nameApartment: 'Salary deposit',
-    //     amount: 2000.0,
-    //   ),
-    // ];
-    // transactions.sort((a, b) => b.date.compareTo(a.date));
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -238,7 +225,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 children: [
                                   IconButton(
                                     onPressed: () {
-                                      toTransferScreen(context);
+                                      toFindApartmentScreen(context);
                                     },
                                     icon: const Icon(
                                       Icons.transfer_within_a_station,
@@ -247,7 +234,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     ),
                                   ),
                                   const Text(
-                                    'Transfer',
+                                    'Apartment',
                                     style: TextStyle(fontSize: 12),
                                   ),
                                 ],
@@ -314,12 +301,20 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     TransactionHistory transaction =
                                         transactions[index];
                                     return Card(
-                                      // color: Color.fromARGB(255, 114, 114, 114),
                                       color: Colors.black,
                                       elevation: 2,
                                       margin: const EdgeInsets.symmetric(
-                                          vertical: 6),
+                                        vertical: 6,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(24.0),
+                                      ),
                                       child: ListTile(
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                        ),
                                         title: transaction.type != ''
                                             ? Text(
                                                 transaction.type,
@@ -328,9 +323,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                                   color: Colors.white,
                                                 ),
                                               )
-                                            : const Text(
-                                                'Name Apartment',
-                                                style: TextStyle(
+                                            : Text(
+                                                transaction.nameApartment,
+                                                style: const TextStyle(
                                                   fontSize: 17,
                                                   color: Colors.white,
                                                 ),

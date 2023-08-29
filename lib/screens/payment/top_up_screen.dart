@@ -40,9 +40,10 @@ class _TopUpScreenState extends State<TopUpScreen> {
       await DatabaseAccount.instance
           .updateAmountMoney(widget.accountLogin.id!, newAmount);
       TransactionHistory newTransactionHistory = TransactionHistory(
-        nameApartment: 'nameApartment',
+        nameApartment: '',
         amount: double.parse(amount.text),
         type: 'Top Up',
+        username: widget.accountLogin.username,
       );
 
       await DatabaseTransactionHistory.instance
