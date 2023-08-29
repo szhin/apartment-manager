@@ -99,9 +99,10 @@ The app utilizes SQLite for its two main databases:
   2. Install the required dependencies:
 
   ```bash
-      $ cd booking-apartments-app
+      $ cd apartment-manager
       $ flutter pub get
   ```
+
   3. Run the app:
 
   ```bash
